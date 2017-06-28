@@ -15,7 +15,7 @@
             android:src="@drawable/logo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
     <LinearLayout
@@ -28,12 +28,13 @@
             android:id="@+id/main_goto_login"
             android:text="@string/main_btn_goto_login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
+
         <Button
             android:id="@+id/main_goto_signup"
             android:text="@string/main_btn_goto_signup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
