@@ -2,4 +2,7 @@
     <string name="app_name">FindGarage1.0</string>
     <string name="main_btn_goto_login">Login</string>
     <string name="main_btn_goto_signup">Sign Up</string>
+    <string name="login_hint_username">Username</string>
+    <string name="login_hint_password">Password</string>
+    <string name="login_btn_login">Login</string>
 </resources>
