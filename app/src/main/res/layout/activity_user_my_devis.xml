@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.user.findgarage10.MyDevisActivity">
+    tools:context="com.example.user.findgarage10.UserMyDevisActivity">
 
 
     <ScrollView
@@ -12,32 +12,32 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_weight="0.3"
-                android:background="@color/colorAccent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:background="@color/colorAccent">
 
                 <ImageView
-                    android:src="@drawable/logo"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:src="@drawable/logo" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="0.7"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_weight="0.7">
 
                 <ListView
                     android:id="@+id/my_devis_lstView"
-                    android:clickable="true"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:clickable="true">
 
                 </ListView>
 

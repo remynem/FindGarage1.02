@@ -5,8 +5,15 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name_label"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- gestion des maps-->
+        <meta-data
+            android:name="com£.google.maps.API_KEY"
+            android:value="@string/app_name" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -15,7 +22,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MyDevisActivity"></activity>
+        <activity android:name=".UserMyDevisActivity" />
+        <activity android:name=".UserListNearestGarageActivity" />
+        <activity android:name=".DetailsGarageActivity"></activity>
     </application>
 
 </manifest>

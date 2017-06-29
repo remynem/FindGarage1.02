@@ -14,7 +14,7 @@ public class UserMyDevisActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_devis);
+        setContentView(R.layout.activity_user_my_devis);
 
         initView();
     }
@@ -28,6 +28,7 @@ public class UserMyDevisActivity extends AppCompatActivity {
     private void initList(){
         String[] listDevis = new String[]{"Ixelles","Etterbeek","Ganshoren","Uccle","Laeken","Woluwe Saint Lambert",
                 "Neder-over-hembeek","Jette"};
-        listMyDevis.setAdapter(new ArrayAdapter<>(this,0, listDevis));
+
+
     }
 }

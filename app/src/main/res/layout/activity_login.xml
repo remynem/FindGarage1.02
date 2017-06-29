@@ -12,36 +12,41 @@
         android:background="@color/colorAccent">
 
         <ImageView
-            android:src="@drawable/logo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo" />
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8">
+        android:layout_weight="0.8"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/login_spinner_type_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></Spinner>
 
         <EditText
             android:id="@+id/login_et_username"
-            android:hint="@string/login_hint_username"
-            android:inputType="text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/login_hint_username"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/login_et_password"
-            android:hint="@string/login_hint_password"
-            android:inputType="textPassword"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="@string/login_hint_password"
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/login_btn_login"
-            android:text="@string/login_btn_login"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/login_btn_login" />
 
     </LinearLayout>
 

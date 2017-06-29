@@ -5,4 +5,17 @@
     <string name="login_hint_username">Username</string>
     <string name="login_hint_password">Password</string>
     <string name="login_btn_login">Login</string>
+
+    <string-array name="user_type">
+        <item>User</item>
+        <item>Garage</item>
+    </string-array>
+    <string name="user_type_prompt">Choose your type</string>
+    <string name="tv_nearest_garage_you_are_here">You are Here</string>
+    <string name="nearest_garage_btn_goto">Go to Page</string>
+    <string name="details_garage_lable_name">Welcome</string>
+    <string name="details_garage_btn_send_devis">Send</string>
+    <string name="form_devis_hint_description">Description</string>
+    <string name="app_name_label">Find the nearest garage</string>
+    <string name="MAP_KEY">AIzaSyC9ygymj5kYcmiWndwhYLPzjXYWnE7Fwgs</string>
 </resources>
