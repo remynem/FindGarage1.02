@@ -1,5 +1,6 @@
 package com.example.user.findgarage10;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.example.user.findgarage10.db.UserDAO;
+import com.example.user.findgarage10.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +24,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText login_et_password;
     private Button login_btn_login;
     private Spinner spinner;
+
+    private UserDAO userDAO;
     //endregion
 
     @Override
@@ -27,6 +34,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initView();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        userDAO = new UserDAO(this);
+        userDAO = userDAO.openWritable();
+        userDAO.initTableUser();
+        userDAO.close();
     }
 
     private void initView() {
@@ -56,8 +72,28 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goToNearestGarage() {
         Intent intent = new Intent(this, UserListNearestGarageActivity.class);
-        startActivity(intent);
+        User user = verifyConnexion(login_et_username.getText().toString(), login_et_password.getText().toString());
+        if(user != null){
+            intent.putExtra("user", user);
+            startActivity(intent);
+        }else{
+            Toast.makeText(this, "Connexion failed", Toast.LENGTH_LONG).show();
+        }
+        //startActivity(intent);
     }
 
+    public User verifyConnexion(String firstName, String lastName){
+        userDAO = new UserDAO(this);
+
+        userDAO = userDAO.openWritable();
+        userDAO.initTableUser();
+        userDAO.close();
+
+        userDAO = userDAO.openReadable();
+
+        User user = userDAO.getUserByLogin(firstName, lastName);
+        userDAO.close();
+        return user;
+    }
 
 }
