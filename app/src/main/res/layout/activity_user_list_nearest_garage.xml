@@ -25,6 +25,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:contentDescription="Logo"
                     android:src="@drawable/logo" />
             </LinearLayout>
 
@@ -46,10 +47,6 @@
                     android:minHeight="100sp"
                     android:minWidth="100sp">
 
-                    <fragment
-                        android:id="@+id/fragment_map"
-                    android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
                 </LinearLayout>
 
 
