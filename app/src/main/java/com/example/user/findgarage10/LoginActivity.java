@@ -39,10 +39,10 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        userDAO = new UserDAO(this);
+        /*userDAO = new UserDAO(this);
         userDAO = userDAO.openWritable();
         userDAO.initTableUser();
-        userDAO.close();
+        userDAO.close();*/
     }
 
     private void initView() {
@@ -85,7 +85,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public User verifyConnexion(String firstName, String lastName){
-        userDAO = new UserDAO(getApplicationContext());
+
+        userDAO = new UserDAO(this);
+        /*userDAO.openWritable();
+        userDAO.initTableUser();*/
 
         userDAO = userDAO.openReadable();
 
@@ -95,20 +98,11 @@ public class LoginActivity extends AppCompatActivity {
             return null;
         } else {
             User user = userDAO.getUserByLogin(firstName, lastName);
-            Toast.makeText(this, "" + user.getNum_user(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Bienvenue " + user.getNum_user(), Toast.LENGTH_LONG).show();
             return user;
         }
 
         //return user;
     }
-
-    //region test
-    public User[] getAllUser() {
-        userDAO = new UserDAO(getApplicationContext());
-        userDAO = userDAO.openReadable();
-        //TODO
-        return null;
-    }
-    //endregion
 
 }

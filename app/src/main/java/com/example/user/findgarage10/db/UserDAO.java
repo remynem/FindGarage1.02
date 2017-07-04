@@ -105,8 +105,7 @@ public class UserDAO {
     }
 
     public User getUserByLogin(String firstName, String lastName){
-        //String whereClause = COLUMN_FIRST_NAME_USER + " = " + firstName + " AND " + COLUMN_LAST_NAME_USER + " = " + lastName + ";";
-        String whereClause = "";
+        String whereClause = COLUMN_FIRST_NAME_USER + "='" + firstName + "' AND " + COLUMN_LAST_NAME_USER + "='" + lastName + "';";
         Cursor cursor = db.query(TABLE_USER, null, whereClause, null, null, null,null);
         int count = cursor.getCount();
         if(count > 0){
@@ -123,15 +122,17 @@ public class UserDAO {
         insertUser(user);
     }
 
-    public User getAllUsers() {
+    public User[] getAllUsers() {
         User[] toReturn;
         Cursor cursor = db.query(TABLE_USER, null, null, null, null, null, null);
         int count = cursor.getCount();
         if (count > 0) {
             toReturn = new User[count];
             for (int i = 0; i < count; i++) {
-
+                cursor.moveToPosition(i);
+                toReturn[i] = cursorToUser(cursor);
             }
+            return toReturn;
         }
         return null;
     }

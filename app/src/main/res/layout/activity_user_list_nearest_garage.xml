@@ -6,11 +6,8 @@
     android:orientation="vertical"
     tools:context="com.example.user.findgarage10.UserMyDevisActivity">
 
-
-
-
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -27,36 +24,53 @@
                     android:src="@drawable/logo" />
             </LinearLayout>
 
-            <LinearLayout
+            <GridLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="400sp"
+                android:minHeight="20sp"
                 android:minWidth="400sp"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/tv_nearest_garage_you_are_here"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
                     android:text="@string/tv_nearest_garage_you_are_here" />
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/tv_nearest_garage_name_user_connected"
+                    android:text="User : "
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minHeight="350sp"
-                    android:minWidth="350sp"
+                    android:layout_height="wrap_content" />
+            </GridLayout>
+
+            <GridLayout
+                android:id="@+id/layout_container_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="250sp"
+                android:minWidth="400sp">
+
+                <!-- Fragment -->
+                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/map"
+                    android:tag="@string/map_fragment_tag"
+                    android:name="com.google.android.gms.maps.MapFragment"
+                    android:layout_column="0"
+                    android:layout_width="200sp"
+                    android:layout_gravity="start"
+                    android:layout_height="match_parent" />
+
+                <ListView
+                    android:id="@+id/lv_list_nearest_garage"
+                    android:layout_column="1"
+                    android:layout_width="200sp"
+                    android:layout_height="match_parent"
                     android:scrollbarAlwaysDrawVerticalTrack="true">
 
-                </LinearLayout>
+                </ListView>
+            </GridLayout>
 
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/nearest_garage_btn_goto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nearest_garage_btn_goto" />
         </LinearLayout>
+
 
 </LinearLayout>

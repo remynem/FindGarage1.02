@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.user.findgarage10">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,8 +15,8 @@
 
         <!-- gestion des maps-->
         <meta-data
-            android:name="com£.google.maps.API_KEY"
-            android:value="@string/app_name" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/MAP_KEY"/>
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -24,7 +28,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".UserMyDevisActivity" />
         <activity android:name=".UserListNearestGarageActivity" />
-        <activity android:name=".DetailsGarageActivity"></activity>
+        <activity android:name=".DetailsGarageActivity"/>
     </application>
 
 </manifest>
