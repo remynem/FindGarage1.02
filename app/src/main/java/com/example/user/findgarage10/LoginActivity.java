@@ -19,12 +19,12 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static int CONNECTED = 1;
     //region declaration
     private EditText login_et_username;
     private EditText login_et_password;
     private Button login_btn_login;
     private Spinner spinner;
-
     private UserDAO userDAO;
     //endregion
 
@@ -72,7 +72,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private void goToNearestGarage() {
         Intent intent = new Intent(this, UserListNearestGarageActivity.class);
+
         User user = verifyConnexion(login_et_username.getText().toString(), login_et_password.getText().toString());
+
         if(user != null){
             intent.putExtra("user", user);
             startActivity(intent);
@@ -83,17 +85,30 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public User verifyConnexion(String firstName, String lastName){
-        userDAO = new UserDAO(this);
-
-        userDAO = userDAO.openWritable();
-        userDAO.initTableUser();
-        userDAO.close();
+        userDAO = new UserDAO(getApplicationContext());
 
         userDAO = userDAO.openReadable();
 
-        User user = userDAO.getUserByLogin(firstName, lastName);
-        userDAO.close();
-        return user;
+        if (userDAO.getUserByLogin(firstName, lastName) == null) {
+            Toast.makeText(this, "Beug", Toast.LENGTH_LONG).show();
+            userDAO.close();
+            return null;
+        } else {
+            User user = userDAO.getUserByLogin(firstName, lastName);
+            Toast.makeText(this, "" + user.getNum_user(), Toast.LENGTH_LONG).show();
+            return user;
+        }
+
+        //return user;
     }
+
+    //region test
+    public User[] getAllUser() {
+        userDAO = new UserDAO(getApplicationContext());
+        userDAO = userDAO.openReadable();
+        //TODO
+        return null;
+    }
+    //endregion
 
 }

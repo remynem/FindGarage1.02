@@ -1,11 +1,11 @@
 package com.example.user.findgarage10.db;
 
-import com.example.user.findgarage10.model.User;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.user.findgarage10.model.User;
 
 /**
  * Created by student on 03-07-17.
@@ -13,12 +13,31 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class UserDAO {
 
+    //region fields db
+    public static final String TABLE_USER = "user";
+    public static final String COLUMN_NUM_USER = "num_user";
+    public static final String COLUMN_FIRST_NAME_USER = "firstName_user";
+    public static final String COLUMN_LAST_NAME_USER = "lastName_user";
+
+    //endregion
+    public static final String COLUMN_EMAIL_USER = "email_user";
+    public static final String COLUMN_TEL_USER = "tel_user";
+    public static final String COLUMN_ADRESS_USER = "adress_user";
+    //region request
+    public static final String CREATE_REQUEST = "CREATE TABLE IF NOT EXISTS " + TABLE_USER + " (   "
+            + COLUMN_NUM_USER + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_FIRST_NAME_USER + " TEXT NOT NULL, "
+            + COLUMN_LAST_NAME_USER + " TEXT NOT NULL, "
+            + COLUMN_EMAIL_USER + " TEXT NOT NULL, "
+            + COLUMN_TEL_USER + " TEXT NOT NULL, "
+            + COLUMN_ADRESS_USER + " TEXT NOT NULL" +
+            " );";
+    public static final String DELETE_REQUEST = "DROP TABLE IF EXISTS " + TABLE_USER + " ; ";
+    private static boolean IS_LOGGED_IN = false;
     //region fields class
     private ConnexionDB dbHelper;
     private Context context;
     private SQLiteDatabase db;
-    //endregion
-
     public UserDAO(Context context) {
         this.context = context;
     }
@@ -28,6 +47,7 @@ public class UserDAO {
         db = dbHelper.getReadableDatabase();
         return this;
     }
+    //endregion
 
     public UserDAO openWritable(){
         dbHelper = new ConnexionDB(context);
@@ -39,28 +59,6 @@ public class UserDAO {
         db.close();
         dbHelper.close();
     }
-
-    //region fields db
-    public static final String TABLE_USER = "user";
-    public static final String COLUMN_NUM_USER = "num_user";
-    public static final String COLUMN_FIRST_NAME_USER = "firstName_user";
-    public static final String COLUMN_LAST_NAME_USER = "lastName_user";
-    public static final String COLUMN_EMAIL_USER = "email_user";
-    public static final String COLUMN_TEL_USER = "tel_user";
-    public static final String COLUMN_ADRESS_USER = "adress_user";
-    //endregion
-
-    //region request
-    public static final String CREATE_REQUEST = "CREATE TABLE IF NOT EXISTS " + TABLE_USER + " (   "
-            + COLUMN_NUM_USER + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + COLUMN_FIRST_NAME_USER + " TEXT NOT NULL, "
-            + COLUMN_LAST_NAME_USER + " TEXT NOT NULL, "
-            + COLUMN_EMAIL_USER + " TEXT NOT NULL, "
-            + COLUMN_TEL_USER + " TEXT NOT NULL, "
-            + COLUMN_ADRESS_USER + " TEXT NOT NULL" +
-            " );";
-
-    public static final String DELETE_REQUEST = "DROP TABLE IF EXISTS " + TABLE_USER + " ; ";
 
     private ContentValues userToContentValues(User user) {
         ContentValues cv = new ContentValues();
@@ -79,7 +77,7 @@ public class UserDAO {
         long id = db.insert(TABLE_USER, null, cv);
         if(id != -1){
             user.setNum_user((int)id);
-            //return user;
+            return user;
         }
         return user;
     }
@@ -91,7 +89,7 @@ public class UserDAO {
         String emailUser = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL_USER));
         String telUser = cursor.getString(cursor.getColumnIndex(COLUMN_TEL_USER));
         String adressUser = cursor.getString(cursor.getColumnIndex(COLUMN_ADRESS_USER));
-        User user = new User(firstName, lastName, emailUser, telUser, adressUser);
+        User user = new User(numUser, firstName, lastName, emailUser, telUser, adressUser);
         return user;
     }
 
@@ -107,7 +105,8 @@ public class UserDAO {
     }
 
     public User getUserByLogin(String firstName, String lastName){
-        String whereClause = COLUMN_FIRST_NAME_USER + " = " + firstName + " AND " + COLUMN_LAST_NAME_USER + " = " + lastName + ";";
+        //String whereClause = COLUMN_FIRST_NAME_USER + " = " + firstName + " AND " + COLUMN_LAST_NAME_USER + " = " + lastName + ";";
+        String whereClause = "";
         Cursor cursor = db.query(TABLE_USER, null, whereClause, null, null, null,null);
         int count = cursor.getCount();
         if(count > 0){
@@ -118,9 +117,25 @@ public class UserDAO {
     }
 
 
+
     public void initTableUser(){
-        User user = new User("rem","rem","email","04526","adresse");
+        User user = new User("paul", "rem", "bt@email.be", "04526", "adresse");
         insertUser(user);
     }
+
+    public User getAllUsers() {
+        User[] toReturn;
+        Cursor cursor = db.query(TABLE_USER, null, null, null, null, null, null);
+        int count = cursor.getCount();
+        if (count > 0) {
+            toReturn = new User[count];
+            for (int i = 0; i < count; i++) {
+
+            }
+        }
+        return null;
+    }
     //endregion
+
+
 }
