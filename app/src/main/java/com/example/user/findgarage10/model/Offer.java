@@ -21,20 +21,24 @@ public class Offer implements Parcelable{
     //endregion
     //region constructors
 
-    public Offer(int num_user, int num_garage, String date_offer, String description_offer, String confirmed_offer) {
+    public Offer(int num_user, int num_garage, String date_offer, String description_offer) {
         this.num_offer = -1;
         this.num_user = num_user;
         this.num_garage = num_garage;
         this.date_offer = date_offer;
         this.description_offer = description_offer;
-        this.confirmed_offer = confirmed_offer;
+        this.confirmed_offer = "pending";
     }
 
-    public Offer(int num_offer, int num_user, int num_garage, String date_offer, String description_offer, String confirmed_offer) {
-        this(num_user, num_garage, date_offer, description_offer, confirmed_offer);
+    public Offer(int num_offer, int num_user, int num_garage, String date_offer, String description_offer) {
+        this(num_user, num_garage, date_offer, description_offer);
         this.num_offer = num_offer;
     }
 
+    public Offer(int num_offer, int num_user, int num_garage, String date_offer, String description_offer, String confirmed_offer) {
+        this(num_offer, num_user, num_garage, date_offer, description_offer);
+        this.confirmed_offer = confirmed_offer;
+    }
     //endregion
     //region getters ans setters
 
@@ -92,13 +96,12 @@ public class Offer implements Parcelable{
     @Override
     public String toString() {
         return "Offer : " +
-                "num_offer=" + num_offer +
-                ", num_user=" + num_user +
-                ", num_garage=" + num_garage +
-                ", date_offer='" + date_offer + '\'' +
-                ", description_offer='" + description_offer + '\'' +
-                ", confirmed_offer='" + confirmed_offer + '\'' +
-                '}';
+                "Num : " + num_offer +
+                ", Client : " + num_user +
+                ", Garage : " + num_garage +
+                ", Date : " + date_offer + '\'' +
+                ", Description : " + description_offer + '\'' +
+                ", Status : " + confirmed_offer;
     }
     //endregion
     //region parcelable

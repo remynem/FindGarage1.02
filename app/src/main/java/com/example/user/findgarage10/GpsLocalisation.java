@@ -34,7 +34,7 @@ public class GpsLocalisation implements LocationListener {
     public void demande(Context context) {
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
             if(callback != null) {
-                callback.localiser(null);
+                callback.localiser(new Position(50.8378034, 4.3536477));
             }
             return;
         }

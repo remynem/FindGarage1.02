@@ -18,11 +18,11 @@ public class UserDAO {
     public static final String COLUMN_NUM_USER = "num_user";
     public static final String COLUMN_FIRST_NAME_USER = "firstName_user";
     public static final String COLUMN_LAST_NAME_USER = "lastName_user";
-
-    //endregion
     public static final String COLUMN_EMAIL_USER = "email_user";
     public static final String COLUMN_TEL_USER = "tel_user";
     public static final String COLUMN_ADRESS_USER = "adress_user";
+    //endregion
+
     //region request
     public static final String CREATE_REQUEST = "CREATE TABLE IF NOT EXISTS " + TABLE_USER + " (   "
             + COLUMN_NUM_USER + " INTEGER PRIMARY KEY AUTOINCREMENT, "
