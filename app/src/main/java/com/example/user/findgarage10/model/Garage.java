@@ -92,11 +92,11 @@ public class Garage implements Parcelable{
     @Override
     public String toString() {
         return "Garage : " +
-                "name_garage='" + name_garage + '\'' +
-                ", domain_garage='" + domain_garage + '\'' +
-                ", email_garage='" + email_garage + '\'' +
-                ", tel_garage='" + tel_garage + '\'' +
-                ", adress_garage='" + adress_garage + '\'' +
+                "name='" + name_garage + '\'' +
+                ", domain='" + domain_garage + '\'' +
+                ", email='" + email_garage + '\'' +
+                ", tel='" + tel_garage + '\'' +
+                ", adress='" + adress_garage + '\'' +
                 '}';
     }
 

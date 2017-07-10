@@ -46,7 +46,7 @@ public class GpsLocalisation implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        if(callback != null) {
+        if(callback == null) {
             callback.localiser(new Position(
                             location.getLatitude(),
                             location.getLongitude()

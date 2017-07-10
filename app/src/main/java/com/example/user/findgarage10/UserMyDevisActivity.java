@@ -51,8 +51,8 @@ public class UserMyDevisActivity extends AppCompatActivity {
     }
 
     private void initList(){
-        offerDAO = offerDAO.openWritable();
-        offerDAO.initOfferDb();
+        /*offerDAO = offerDAO.openWritable();
+        offerDAO.initOfferDb();*/
         offerDAO.openReadable();
         Offer[] offers = offerDAO.getNotConfirmedOffers();
         ArrayAdapter<Offer> adapter = new ArrayAdapter<Offer>(this, android.R.layout.simple_list_item_1, android.R.id.text1, offers);

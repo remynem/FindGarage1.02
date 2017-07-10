@@ -66,15 +66,13 @@
                     android:layout_width="200sp"
                     android:layout_height="match_parent"
                     android:scrollbarAlwaysDrawVerticalTrack="true">
-
                 </ListView>
             </GridLayout>
-
-        </LinearLayout>
         <Button
-            android:id="@+id/btn_goToSendDevis"
-            android:text="SenD"
+            android:id="@+id/btn_goToMyDevis"
+            android:text="@string/btn_go_to_my_devis"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
+        </LinearLayout>
 
 </LinearLayout>

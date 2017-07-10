@@ -39,10 +39,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        /*userDAO = new UserDAO(this);
-        userDAO = userDAO.openWritable();
-        userDAO.initTableUser();
-        userDAO.close();*/
     }
 
     private void initView() {

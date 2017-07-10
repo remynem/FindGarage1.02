@@ -22,6 +22,7 @@ public class DetailsGarageActivity extends AppCompatActivity {
 
 
     private Button btn_send_devis;
+    private Button btn_back_home;
     private EditText et_description_devis;
     private User userConnected;
     private Garage garageSelected;
@@ -31,8 +32,9 @@ public class DetailsGarageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_garage);
-
+        initTarget();
         btn_send_devis = (Button) findViewById(R.id.details_garage_btn_send_devis);
+        btn_back_home = (Button) findViewById(R.id.details_garage_back_home);
         et_description_devis = (EditText) findViewById(R.id.form_devis_description);
 
         btn_send_devis.setOnClickListener(new View.OnClickListener() {
@@ -41,18 +43,23 @@ public class DetailsGarageActivity extends AppCompatActivity {
                 sendDevis();
             }
         });
+        btn_back_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                backHome();
+            }
+        });
     }
 
     private void sendDevis() {
         initTarget();
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        Offer offer = new Offer(1,1,date,et_description_devis.getText().toString());
+        Offer offer = new Offer(1,garageSelected.getNum_garage(),date,et_description_devis.getText().toString());
         offerDAO = new OfferDAO(this);
         offerDAO = offerDAO.openWritable();
         offerDAO.insertOffer(offer);
         offerDAO.close();
 
-        Toast.makeText(this, "Devis sent", Toast.LENGTH_SHORT).show();
         finish();
         Intent goBackToListDevis = new Intent(this, UserMyDevisActivity.class);
 
@@ -60,6 +67,15 @@ public class DetailsGarageActivity extends AppCompatActivity {
         goBackToListDevis.putExtra("garage", userConnected);
 
         startActivity(goBackToListDevis);
+    }
+
+    private void backHome(){
+        Intent goBackHome = new Intent(this, UserListNearestGarageActivity.class);
+
+        goBackHome.putExtra("user", userConnected);
+        goBackHome.putExtra("garage", userConnected);
+
+        startActivity(goBackHome);
     }
 
     private void initTarget() {

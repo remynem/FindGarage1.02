@@ -22,6 +22,7 @@ public class ConnexionDB extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(UserDAO.CREATE_REQUEST);
         sqLiteDatabase.execSQL(OfferDAO.CREATE_REQUEST);
+        sqLiteDatabase.execSQL(GarageDAO.CREATE_REQUEST);
 
     }
 
