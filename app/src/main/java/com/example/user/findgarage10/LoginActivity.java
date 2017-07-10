@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -108,8 +107,8 @@ public class LoginActivity extends AppCompatActivity {
     public User verifyConnexionUser(String firstName, String lastName){
 
         userDAO = new UserDAO(this);
-        /*userDAO.openWritable();
-        userDAO.initTableUser();*/
+        userDAO.openWritable();
+        userDAO.initTableUser();
 
         userDAO = userDAO.openReadable();
 
@@ -122,8 +121,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Bienvenue " + user.getNum_user(), Toast.LENGTH_LONG).show();
             return user;
         }
-
-        //return user;
     }
 
 }

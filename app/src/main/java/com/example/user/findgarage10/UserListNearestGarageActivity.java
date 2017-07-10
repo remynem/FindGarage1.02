@@ -14,10 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.user.findgarage10.db.GarageDAO;
-import com.example.user.findgarage10.db.OfferDAO;
 import com.example.user.findgarage10.db.UserDAO;
 import com.example.user.findgarage10.model.Garage;
 import com.example.user.findgarage10.model.User;
@@ -176,7 +174,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
             }
             if(adresse.size() > 0){
                 Position position = new Position(adresse.get(0).getLongitude(), adresse.get(0).getLatitude());
-                knownGarages.put(listGarages[i].getDomain_garage(), position);
+                knownGarages.put(listGarages[i].getName_garage(), position);
             }
         }
         return knownGarages;
