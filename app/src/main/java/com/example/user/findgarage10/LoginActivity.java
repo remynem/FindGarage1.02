@@ -5,13 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.user.findgarage10.db.GarageDAO;
 import com.example.user.findgarage10.db.UserDAO;
+import com.example.user.findgarage10.model.Garage;
 import com.example.user.findgarage10.model.User;
 
 import java.util.ArrayList;
@@ -26,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button login_btn_login;
     private Spinner spinner;
     private UserDAO userDAO;
+    private GarageDAO garageDAO;
     //endregion
 
     @Override
@@ -67,20 +71,41 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToNearestGarage() {
-        Intent intent = new Intent(this, UserListNearestGarageActivity.class);
-
-        User user = verifyConnexion(login_et_username.getText().toString(), login_et_password.getText().toString());
-
-        if(user != null){
-            intent.putExtra("user", user);
+        Intent intent;
+        String loginType = spinner.getSelectedItem().toString();
+        if(loginType == "Garage"){
+            Garage garage =  verifyConnexionGarage(login_et_username.getText().toString(), login_et_password.getText().toString());
+            intent = new Intent(this, GarageMyDevisActivity.class);
+            intent.putExtra("garage", garage);
             startActivity(intent);
         }else{
-            Toast.makeText(this, "Connexion failed", Toast.LENGTH_LONG).show();
+            User user = verifyConnexionUser(login_et_username.getText().toString(), login_et_password.getText().toString());
+            if(user != null){
+                intent = new Intent(this, UserListNearestGarageActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+            }else{
+                Toast.makeText(this, "Connexion failed", Toast.LENGTH_LONG).show();
+            }
         }
+
         //startActivity(intent);
     }
 
-    public User verifyConnexion(String firstName, String lastName){
+    private Garage verifyConnexionGarage(String name, String domaine) {
+        garageDAO = new GarageDAO(this);
+        garageDAO = garageDAO.openReadable();
+        Garage toReturn = garageDAO.getGarageByLogin(name, domaine);
+        if(toReturn == null){
+            Toast.makeText(this, "Beug - garage", Toast.LENGTH_LONG).show();
+            garageDAO.close();
+        }else{
+            Toast.makeText(this, "Garage" + domaine, Toast.LENGTH_LONG).show();
+        }
+        return toReturn;
+    }
+
+    public User verifyConnexionUser(String firstName, String lastName){
 
         userDAO = new UserDAO(this);
         /*userDAO.openWritable();
@@ -89,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
         userDAO = userDAO.openReadable();
 
         if (userDAO.getUserByLogin(firstName, lastName) == null) {
-            Toast.makeText(this, "Beug", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Beug user", Toast.LENGTH_LONG).show();
             userDAO.close();
             return null;
         } else {

@@ -127,4 +127,16 @@ public class GarageDAO {
         }
         return null;
     }
+
+    public Garage getGarageByLogin(String namegarage, String domaineGarage){
+        //String whereClause = COLUMN_NAME_GARAGE + "='" + namegarage + "' AND " + COLUMN_DOMAINE_GARAGE + "='" + domaineGarage + "';";
+        String whereClause = COLUMN_DOMAINE_GARAGE + "='" + domaineGarage + "';";
+        Cursor cursor = db.query(TABLE_GARAGE, null, whereClause, null, null, null,null);
+        int count = cursor.getCount();
+        if(count > 0){
+            cursor.moveToFirst();
+            return cursorToGarage(cursor);
+        }
+        return null;
+    }
 }

@@ -4,18 +4,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.user.findgarage10.db.OfferDAO;
 import com.example.user.findgarage10.model.Offer;
+import com.example.user.findgarage10.model.User;
 
 public class UserMyDevisActivity extends AppCompatActivity {
 
     //region declaration
     private ListView listMyDevis;
+    private User userConnected;
     private OfferDAO offerDAO;
     private Button btn_back_home;
     //endregion
@@ -51,10 +52,13 @@ public class UserMyDevisActivity extends AppCompatActivity {
     }
 
     private void initList(){
+        offerDAO = new OfferDAO(this);
         /*offerDAO = offerDAO.openWritable();
         offerDAO.initOfferDb();*/
+        Bundle bundle = this.getIntent().getExtras();
+        userConnected = bundle.getParcelable("user");
         offerDAO.openReadable();
-        Offer[] offers = offerDAO.getNotConfirmedOffers();
+        Offer[] offers = offerDAO.getNotConfirmedOffersForUser(userConnected.getNum_user());
         ArrayAdapter<Offer> adapter = new ArrayAdapter<Offer>(this, android.R.layout.simple_list_item_1, android.R.id.text1, offers);
         listMyDevis.setAdapter(adapter);
     }

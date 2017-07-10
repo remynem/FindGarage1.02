@@ -26,4 +26,5 @@
     <string name="btn_back_home">Back Home</string>
     <string name="details_garage_btn_back_home">Cancel</string>
     <string name="btn_go_to_my_devis">show my devis</string>
+    <string name="ListMyDevisLabel">List of pending offer</string>
 </resources>

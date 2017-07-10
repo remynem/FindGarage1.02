@@ -118,8 +118,9 @@ public class UserDAO {
 
 
     public void initTableUser(){
-        User user = new User("paul", "rem", "bt@email.be", "04526", "adresse");
-        insertUser(user);
+        //User user = new User("paul", "rem", "bt@email.be", "04526", "adresse");
+        User user2 = new User("kevin", "test", "bt@email.be", "04526", "adresse");
+        insertUser(user2);
     }
 
     public User[] getAllUsers() {

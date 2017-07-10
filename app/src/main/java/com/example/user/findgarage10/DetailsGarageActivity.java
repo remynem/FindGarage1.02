@@ -54,7 +54,7 @@ public class DetailsGarageActivity extends AppCompatActivity {
     private void sendDevis() {
         initTarget();
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        Offer offer = new Offer(1,garageSelected.getNum_garage(),date,et_description_devis.getText().toString());
+        Offer offer = new Offer(userConnected.getNum_user(),garageSelected.getNum_garage(),date,et_description_devis.getText().toString());
         offerDAO = new OfferDAO(this);
         offerDAO = offerDAO.openWritable();
         offerDAO.insertOffer(offer);
