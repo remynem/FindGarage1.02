@@ -1,6 +1,7 @@
 package com.example.user.findgarage10;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -8,6 +9,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 /**
@@ -15,26 +17,26 @@ import android.util.Log;
  */
 
 public class GpsLocalisation implements LocationListener {
+    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     //region Callback
-    public interface IGpsLocalisation {
-        void localiser(Position position);
-    }
-
     private IGpsLocalisation callback;
-
-    public void setCallback(IGpsLocalisation callback) {
-        this.callback = callback;
-    }
+    private Context context;
     //endregion
     public GpsLocalisation(){
 
     }
 
+    public void setCallback(IGpsLocalisation callback) {
+        this.callback = callback;
+    }
+
     public void demande(Context context) {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
-            if(callback != null) {
-                callback.localiser(new Position(50.8378034, 4.3536477));
+        this.context = context;
+        if (ActivityCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED) {
+            if (callback != null) {
+                requestPermissions(context);
             }
             return;
         }
@@ -44,14 +46,30 @@ public class GpsLocalisation implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.i("TEST", "onLocationChanged");
-        Log.v("position", location.getLatitude() + " - " + location.getLongitude());
         if(callback != null) {
             callback.localiser(new Position(
                             location.getLatitude(),
                             location.getLongitude()
                     )
             );
+        }
+    }
+
+    private void requestPermissions(Context context) {
+        if (ContextCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+
+            } else {
+                ActivityCompat.requestPermissions((Activity) context,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+            }
         }
     }
 
@@ -71,5 +89,9 @@ public class GpsLocalisation implements LocationListener {
     @Override
     public void onProviderDisabled(String s) {
 
+    }
+
+    public interface IGpsLocalisation {
+        void localiser(Position position);
     }
 }
