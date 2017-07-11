@@ -24,6 +24,7 @@ public class UserMyDevisActivity extends AppCompatActivity {
     private User userConnected;
     private OfferDAO offerDAO;
     private Button btn_back_home;
+    private Button btn_show_confirmed_devis;
     //endregion
 
     @Override
@@ -44,6 +45,18 @@ public class UserMyDevisActivity extends AppCompatActivity {
                 backHome();
             }
         });
+        btn_show_confirmed_devis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToConfirmedDevis();
+            }
+        });
+    }
+
+    private void goToConfirmedDevis() {
+        Intent intent = new Intent(this, UserConfirmedDevisActivity.class);
+        intent.putExtra("user", userConnected);
+        startActivity(intent);
     }
 
     private AlertDialog.Builder create(){
@@ -78,6 +91,7 @@ public class UserMyDevisActivity extends AppCompatActivity {
         listMyDevis = (ListView) findViewById(R.id.my_devis_lstView);
         offerDAO = new OfferDAO(this);
         btn_back_home = (Button) findViewById(R.id.btn_my_devis_back_home);
+        btn_show_confirmed_devis = (Button) findViewById(R.id.btn_my_devis_show_confirmed);
         initList();
 
     }

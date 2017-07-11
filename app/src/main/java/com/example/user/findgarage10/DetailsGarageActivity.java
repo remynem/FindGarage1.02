@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.findgarage10.db.OfferDAO;
@@ -23,6 +24,8 @@ public class DetailsGarageActivity extends AppCompatActivity {
 
     private Button btn_send_devis;
     private Button btn_back_home;
+    private TextView label_details_garage;
+    private TextView label_tel_garage;
     private EditText et_description_devis;
     private User userConnected;
     private Garage garageSelected;
@@ -32,10 +35,9 @@ public class DetailsGarageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_garage);
+
         initTarget();
-        btn_send_devis = (Button) findViewById(R.id.details_garage_btn_send_devis);
-        btn_back_home = (Button) findViewById(R.id.details_garage_back_home);
-        et_description_devis = (EditText) findViewById(R.id.form_devis_description);
+        initView();
 
         btn_send_devis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +51,14 @@ public class DetailsGarageActivity extends AppCompatActivity {
                 backHome();
             }
         });
+    }
+
+    private void initView() {
+        btn_send_devis = (Button) findViewById(R.id.details_garage_btn_send_devis);
+        btn_back_home = (Button) findViewById(R.id.details_garage_back_home);
+        et_description_devis = (EditText) findViewById(R.id.form_devis_description);
+        label_details_garage = (TextView) findViewById(R.id.details_garage_label_details_garage);
+        label_tel_garage = (TextView) findViewById(R.id.details_garage_label_num_garage);
     }
 
     private void sendDevis() {

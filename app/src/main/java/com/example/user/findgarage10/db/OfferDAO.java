@@ -147,6 +147,39 @@ public class OfferDAO {
         return offers;
     }
 
+    public Offer[] getConfirmedOffersForGarage(int numGarage){
+        String whereClause = COLUMN_CONFIRMED_OFFER + "!='" + PENDING_OFFER + "' AND " + COLUMN_NUM_GARAGE + "='" + numGarage + "';";
+        Cursor cursor = db.query(TABLE_OFFER, null, whereClause, null, null, null, null);
+        int count = cursor.getCount();
+        Offer[] offers = new Offer[0];
+        if(count > 0){
+            offers = new Offer[count];
+            for (int i = 0; i < count; i++){
+                cursor.moveToPosition(i);
+                offers[i] = cursorToOffer(cursor);
+            }
+        }
+        close();
+        return offers;
+    }
+
+    public Offer[] getConfirmedOffersForUser(int numUser){
+        String whereClause = COLUMN_CONFIRMED_OFFER + "!='" + PENDING_OFFER + "' AND " + COLUMN_NUM_USER + "='" + numUser + "';";
+        Cursor cursor = db.query(TABLE_OFFER, null, whereClause, null, null, null, null);
+        int count = cursor.getCount();
+        Offer[] offers = new Offer[0];
+        if(count > 0){
+            offers = new Offer[count];
+            for (int i = 0; i < count; i++){
+                cursor.moveToPosition(i);
+                offers[i] = cursorToOffer(cursor);
+            }
+        }
+        close();
+        return offers;
+    }
+
+
     public void initOfferDb(){
         Offer of1 = new Offer(1,1,"12/05/12","entretien 15000km");
         insertOffer(of1);

@@ -1,5 +1,6 @@
 package com.example.user.findgarage10;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,7 @@ public class GarageMyDevisActivity extends AppCompatActivity {
 
     private ListView myPeddingOffers;
     private Button btn_goBackHome;
+    private Button btn_show_confirmed_offer;
     private OfferDAO offerDAO;
     private Garage garageConnected;
 
@@ -35,6 +37,12 @@ public class GarageMyDevisActivity extends AppCompatActivity {
                 goToSelectedItem(offerSelected);
             }
         });
+        btn_show_confirmed_offer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToConfirmedOffer();
+            }
+        });
         btn_goBackHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,10 +51,20 @@ public class GarageMyDevisActivity extends AppCompatActivity {
         });
     }
 
+    private void goToConfirmedOffer() {
+        Intent intent = new Intent(this, GarageConfirmedOfferActivity.class);
+        intent.putExtra("garage", garageConnected);
+        startActivity(intent);
+    }
+
     private void goToSelectedItem(Offer offerSelected) {
         Toast.makeText(this, offerSelected.toString(), Toast.LENGTH_LONG).show();
         //TODO add popup for confirm or not the offer
         //TODO if confirm, add to resa & change status, else delete
+        offerDAO = new OfferDAO(this);
+        offerDAO = offerDAO.openWritable();
+        offerSelected = offerDAO.confirmOffer(offerSelected);
+        Toast.makeText(this, "Offer num "+offerSelected.getNum_offer()+ "has been " + offerSelected.getConfirmed_offer(), Toast.LENGTH_LONG).show();
     }
 
     private void initField(){
@@ -58,6 +76,7 @@ public class GarageMyDevisActivity extends AppCompatActivity {
     private void initView() {
         myPeddingOffers = (ListView) findViewById(R.id.lv_list_garage_pedding_offer);
         btn_goBackHome = (Button) findViewById(R.id.btn_garage_my_devis_back_home);
+        btn_show_confirmed_offer = (Button) findViewById(R.id.btn_garage_my_devis_show_confirmed_devis);
     }
 
     private void initListView(){

@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.user.findgarage10.GarageMyDevisActivity">
-
+    tools:context="com.example.user.findgarage10.GarageConfirmedOfferActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,38 +23,21 @@
         android:orientation="vertical">
 
         <TextView
-            android:text="@string/ListMyDevisLabel"
+            android:text="@string/ListMyConfirmedOfferLabel"
             android:textSize="20sp"
             android:textAlignment="center"
             android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
         <ListView
-            android:id="@+id/lv_list_garage_pedding_offer"
+            android:id="@+id/lv_list_user_confirmed_offer"
             android:layout_width="match_parent"
             android:layout_height="238dp">
-
         </ListView>
-
     </LinearLayout>
-    <GridLayout
+    <Button
+        android:id="@+id/btn_confirmed_devis_back_hom"
+        android:text="@string/btn_back_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnCount="2">
-
-        <Button
-            android:id="@+id/btn_garage_my_devis_back_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_back_home"
-            android:layout_column="0"/>
-        <Button
-            android:id="@+id/btn_garage_my_devis_show_confirmed_devis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_show_confirmed_offer"
-            android:layout_gravity="right"
-            android:layout_column="1"/>
-    </GridLayout>
-
+        android:layout_height="wrap_content" />
 </LinearLayout>

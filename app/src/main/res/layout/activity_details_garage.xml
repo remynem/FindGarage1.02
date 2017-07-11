@@ -40,12 +40,19 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/details_garage_label_name"
+                        android:id="@+id/details_garage_label_details_garage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/details_garage_lable_name" />
+                        android:hint="@string/label_details_garage"/>
 
                     <!-- formulaire depot de devis -->
+                    <TextView
+                        android:id="@+id/details_garage_label_num_garage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/label_tel_garage"/>
+
+
                     <EditText
                         android:id="@+id/form_devis_description"
                         android:layout_width="match_parent"

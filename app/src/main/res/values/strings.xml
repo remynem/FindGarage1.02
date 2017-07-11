@@ -26,5 +26,15 @@
     <string name="btn_back_home">Back Home</string>
     <string name="details_garage_btn_back_home">Cancel</string>
     <string name="btn_go_to_my_devis">show my devis</string>
-    <string name="ListMyDevisLabel">List of pending offer</string>
+    <string name="ListMyDevisLabel">List of pending offer(s)</string>
+    <string name="label_details_garage">Garage\'s details</string>
+    <string name="label_tel_garage">Garage\'s Telephone</string>
+    <string name="btn_show_confirmed_offer">Confirmed Offer</string>
+    <string name="ListMyConfirmedOfferLabel">Confirmed Offer(s)</string>
+    <string name="btn_user_show_confirmed">Show confirmed</string>
+    <string name="offer_num_client">Client :</string>
+    <string name="offer_description">Description</string>
+    <string name="offer_date">Received date</string>
+    <string name="label_change_offer_status">Update status?</string>
+    <string name="btn_update_offer_status">Update Status</string>
 </resources>

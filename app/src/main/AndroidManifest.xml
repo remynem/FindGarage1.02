@@ -28,7 +28,10 @@
         <activity android:name=".UserMyDevisActivity" />
         <activity android:name=".UserListNearestGarageActivity" />
         <activity android:name=".DetailsGarageActivity" />
-        <activity android:name=".GarageMyDevisActivity"></activity>
+        <activity android:name=".GarageMyDevisActivity" />
+        <activity android:name=".GarageConfirmedOfferActivity" />
+        <activity android:name=".UserConfirmedDevisActivity" />
+        <activity android:name=".ReservationUpdatesActivity"></activity>
     </application>
 
 </manifest>
