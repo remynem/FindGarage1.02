@@ -42,9 +42,9 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
     private TextView label_userConnected;
     private UserDAO userDAO;
     private GarageDAO garageDAO;
-    private Button btn_goToMyDevis;
     private Map<String, Position> garagesKnown;
     private User userConnected;
+    private Button btn_go_to_user_my_devis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +65,13 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
                 goToSendDevis(nomGarage);
             }
         });
-        displayMap();
-        btn_goToMyDevis.setOnClickListener(new View.OnClickListener() {
+        btn_go_to_user_my_devis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 goToMyDevis();
             }
         });
+        displayMap();
     }
 
     private void goToMyDevis() {
@@ -93,13 +93,12 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
     public void initFields() {
         listView_garage = (ListView) findViewById(R.id.lv_list_nearest_garage);
         label_userConnected = (TextView) findViewById(R.id.tv_nearest_garage_name_user_connected);
-        btn_goToMyDevis = (Button) findViewById(R.id.btn_goToMyDevis);
+        btn_go_to_user_my_devis = (Button) findViewById(R.id.btn_goToMyDevis);
     }
 
     public void getUserConnected() {
         userConnected = getIntent().getExtras().getParcelable("user");
         label_userConnected.setText(userConnected.toString());
-
     }
 
     private void initListView() {
@@ -157,7 +156,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
     private Map<String, Position> getKnownGarage() {
         Map<String, Position> knownGarages = new HashMap<>();
         garageDAO = new GarageDAO(this);
-
+        //TODO init necessaire
         /*garageDAO = garageDAO.openWritable();
         garageDAO.initTableGarage();*/
 

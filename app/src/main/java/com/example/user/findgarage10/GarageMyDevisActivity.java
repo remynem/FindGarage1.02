@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,6 +16,7 @@ import com.example.user.findgarage10.model.Offer;
 public class GarageMyDevisActivity extends AppCompatActivity {
 
     private ListView myPeddingOffers;
+    private Button btn_goBackHome;
     private OfferDAO offerDAO;
     private Garage garageConnected;
 
@@ -33,6 +35,12 @@ public class GarageMyDevisActivity extends AppCompatActivity {
                 goToSelectedItem(offerSelected);
             }
         });
+        btn_goBackHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void goToSelectedItem(Offer offerSelected) {
@@ -49,6 +57,7 @@ public class GarageMyDevisActivity extends AppCompatActivity {
 
     private void initView() {
         myPeddingOffers = (ListView) findViewById(R.id.lv_list_garage_pedding_offer);
+        btn_goBackHome = (Button) findViewById(R.id.btn_garage_my_devis_back_home);
     }
 
     private void initListView(){

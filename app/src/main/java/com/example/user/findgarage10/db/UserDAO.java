@@ -45,6 +45,7 @@ public class UserDAO {
     public UserDAO openReadable(){
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getReadableDatabase();
+        db.execSQL(CREATE_REQUEST);
         return this;
     }
     //endregion
@@ -52,6 +53,7 @@ public class UserDAO {
     public UserDAO openWritable(){
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getWritableDatabase();
+        db.execSQL(CREATE_REQUEST);
         return this;
     }
 

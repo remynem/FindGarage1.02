@@ -95,13 +95,12 @@ public class Offer implements Parcelable{
 
     @Override
     public String toString() {
-        return "Offer : " +
-                "Num : " + num_offer +
-                ", Client : " + num_user +
-                ", Garage : " + num_garage +
-                ", Date : " + date_offer + '\'' +
-                ", Description : " + description_offer + '\'' +
-                ", Status : " + confirmed_offer;
+        return "Num : " + num_offer +
+                " Client : " + num_user +
+                " Garage : " + num_garage +
+                " Date : " + date_offer + '\'' +
+                " Description : " + description_offer + '\'' +
+                " Status : " + confirmed_offer;
     }
     //endregion
     //region parcelable

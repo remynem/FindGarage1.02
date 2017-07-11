@@ -54,12 +54,14 @@ public class OfferDAO {
     public OfferDAO openReadable(){
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getReadableDatabase();
+        db.execSQL(CREATE_REQUEST);
         return this;
     }
 
     public OfferDAO openWritable(){
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getWritableDatabase();
+        db.execSQL(CREATE_REQUEST);
         return this;
     }
 
@@ -114,9 +116,6 @@ public class OfferDAO {
 
     //region select
     public Offer[] getNotConfirmedOffersForUser(int numUser){
-
-        db.execSQL(CREATE_REQUEST);
-        //String whereClause = COLUMN_CONFIRMED_OFFER + "='" + PENDING_OFFER + "' ; ";
         String whereClause = COLUMN_CONFIRMED_OFFER + "='" + PENDING_OFFER + "' AND " + COLUMN_NUM_USER + "='" + numUser + "';";
         Cursor cursor = db.query(TABLE_OFFER, null, whereClause, null, null, null, null);
         int count = cursor.getCount();
@@ -133,7 +132,6 @@ public class OfferDAO {
     }
 
     public Offer[] getNotConfirmedOffersForGarage(int numGarage){
-        db.execSQL(CREATE_REQUEST);
         String whereClause = COLUMN_CONFIRMED_OFFER + "='" + PENDING_OFFER + "' AND " + COLUMN_NUM_GARAGE + "='" + numGarage + "';";
         Cursor cursor = db.query(TABLE_OFFER, null, whereClause, null, null, null, null);
         int count = cursor.getCount();

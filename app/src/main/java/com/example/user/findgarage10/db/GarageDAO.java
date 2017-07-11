@@ -44,6 +44,7 @@ public class GarageDAO {
     public GarageDAO openReadable(){
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getReadableDatabase();
+        db.execSQL(CREATE_REQUEST);
         return this;
     }
 
@@ -51,7 +52,6 @@ public class GarageDAO {
     public GarageDAO openWritable(){
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getWritableDatabase();
-        //TEST
         db.execSQL(CREATE_REQUEST);
         return this;
     }
@@ -117,8 +117,7 @@ public class GarageDAO {
     }
 
     public Garage getGarageByName(String nameGarage){
-        //Pour les tests use domaine, nom doit etre debugger
-        String whereClause = COLUMN_DOMAINE_GARAGE + "='" + nameGarage + "';";
+        String whereClause = COLUMN_NAME_GARAGE + "='" + nameGarage + "';";
         Cursor cursor = db.query(TABLE_GARAGE, null, whereClause, null, null, null,null);
         int count = cursor.getCount();
         if(count > 0){

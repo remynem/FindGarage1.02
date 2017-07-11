@@ -107,8 +107,9 @@ public class LoginActivity extends AppCompatActivity {
     public User verifyConnexionUser(String firstName, String lastName){
 
         userDAO = new UserDAO(this);
-        userDAO.openWritable();
-        userDAO.initTableUser();
+        //TODO init necessaire
+        /*userDAO = userDAO.openWritable();
+        userDAO.initTableUser();*/
 
         userDAO = userDAO.openReadable();
 

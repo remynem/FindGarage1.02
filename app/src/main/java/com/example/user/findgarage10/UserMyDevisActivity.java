@@ -1,9 +1,14 @@
 package com.example.user.findgarage10;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -27,13 +32,39 @@ public class UserMyDevisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_my_devis);
 
         initView();
-
+        listMyDevis.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //AlertDialog dialog = create();
+            }
+        });
         btn_back_home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 backHome();
             }
         });
+    }
+
+    private AlertDialog.Builder create(){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder
+                .setTitle("Erase hard drive")
+                .setMessage("Are you sure?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int numOffer) {
+                        finish();
+                        Log.i("Dialog", null);
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }).show();
+        return builder;
     }
 
     private void backHome() {
@@ -61,5 +92,10 @@ public class UserMyDevisActivity extends AppCompatActivity {
         Offer[] offers = offerDAO.getNotConfirmedOffersForUser(userConnected.getNum_user());
         ArrayAdapter<Offer> adapter = new ArrayAdapter<Offer>(this, android.R.layout.simple_list_item_1, android.R.id.text1, offers);
         listMyDevis.setAdapter(adapter);
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        return super.onCreateDialog(id);
     }
 }

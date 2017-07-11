@@ -55,6 +55,7 @@ public class DetailsGarageActivity extends AppCompatActivity {
         initTarget();
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         Offer offer = new Offer(userConnected.getNum_user(),garageSelected.getNum_garage(),date,et_description_devis.getText().toString());
+
         offerDAO = new OfferDAO(this);
         offerDAO = offerDAO.openWritable();
         offerDAO.insertOffer(offer);
@@ -64,7 +65,7 @@ public class DetailsGarageActivity extends AppCompatActivity {
         Intent goBackToListDevis = new Intent(this, UserMyDevisActivity.class);
 
         goBackToListDevis.putExtra("user", userConnected);
-        goBackToListDevis.putExtra("garage", userConnected);
+        goBackToListDevis.putExtra("garage", garageSelected);
 
         startActivity(goBackToListDevis);
     }
@@ -73,7 +74,7 @@ public class DetailsGarageActivity extends AppCompatActivity {
         Intent goBackHome = new Intent(this, UserListNearestGarageActivity.class);
 
         goBackHome.putExtra("user", userConnected);
-        goBackHome.putExtra("garage", userConnected);
+        goBackHome.putExtra("garage", garageSelected);
 
         startActivity(goBackHome);
     }
