@@ -184,4 +184,11 @@ public class OfferDAO {
         Offer of1 = new Offer(1,1,"12/05/12","entretien 15000km");
         insertOffer(of1);
     }
+
+    public void updateReservationStatus(int numOffer, String newStatus){
+        String whereClause = COLUMN_NUM_OFFER + " = " + numOffer + " ; ";
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_CONFIRMED_OFFER , newStatus);
+        db.update(TABLE_OFFER, cv, whereClause, null);
+    }
 }

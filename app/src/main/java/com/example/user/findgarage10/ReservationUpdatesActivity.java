@@ -1,5 +1,6 @@
 package com.example.user.findgarage10;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.user.findgarage10.db.OfferDAO;
 import com.example.user.findgarage10.model.Offer;
 
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ public class ReservationUpdatesActivity extends AppCompatActivity {
     private Spinner statusSpinner;
     private Button btn_update_status;
     private Offer offerSent;
+    private OfferDAO offerDAO;
 
 
     @Override
@@ -38,10 +41,24 @@ public class ReservationUpdatesActivity extends AppCompatActivity {
         btn_update_status.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                updateOfferStatus();
+                finish();
             }
         });
 
+    }
+
+    private void updateOfferStatus() {
+        int numOffer = offerSent.getNum_offer();
+        String newStatus = statusSpinner.getSelectedItem().toString();
+        offerDAO = new OfferDAO(this);
+        offerDAO = offerDAO.openWritable();
+        offerDAO.updateReservationStatus(numOffer, newStatus);
+    }
+
+    private void goBackToConfirmedOffer() {
+        //Intent intent = new Intent(this, GarageConfirmedOfferActivity.class);
+        finish();
     }
 
     private void initFields() {
