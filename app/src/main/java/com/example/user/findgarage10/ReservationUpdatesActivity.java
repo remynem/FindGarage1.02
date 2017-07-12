@@ -1,8 +1,8 @@
 package com.example.user.findgarage10;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.user.findgarage10.db.OfferDAO;
+import com.example.user.findgarage10.model.Garage;
 import com.example.user.findgarage10.model.Offer;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class ReservationUpdatesActivity extends AppCompatActivity {
     private Spinner statusSpinner;
     private Button btn_update_status;
     private Offer offerSent;
+    private Garage garage;
     private OfferDAO offerDAO;
 
 
@@ -42,7 +44,7 @@ public class ReservationUpdatesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 updateOfferStatus();
-                finish();
+                goBackToConfirmedOffer();
             }
         });
 
@@ -57,15 +59,17 @@ public class ReservationUpdatesActivity extends AppCompatActivity {
     }
 
     private void goBackToConfirmedOffer() {
-        //Intent intent = new Intent(this, GarageConfirmedOfferActivity.class);
-        finish();
+        Intent intent = new Intent(this, GarageConfirmedOfferActivity.class);
+        intent.putExtra("garage", garage);
+        startActivity(intent);
     }
 
     private void initFields() {
         Bundle bundle = getIntent().getExtras();
         offerSent = bundle.getParcelable("offer");
+        garage = bundle.getParcelable("garage");
 
-        label_name_client.setText(" "+offerSent.getNum_user());
+        label_name_client.setText(" " + offerSent.getNum_user());
         label_date.setText(offerSent.getDate_offer());
         label_description.setText(offerSent.getDescription_offer());
 

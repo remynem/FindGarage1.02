@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by student on 03-07-17.
  */
 
-public class Reservation implements Parcelable{
+public class Reservation implements Parcelable {
     //region POJO
 
 
@@ -108,6 +108,7 @@ public class Reservation implements Parcelable{
                 ", closed_res='" + closed_res + '\'' +
                 '}';
     }
+
     //endregion
     //region parcelable
     protected Reservation(Parcel in) {

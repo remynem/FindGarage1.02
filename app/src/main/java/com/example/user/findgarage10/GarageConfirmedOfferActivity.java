@@ -1,9 +1,8 @@
 package com.example.user.findgarage10;
 
 import android.content.Intent;
-import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -50,6 +49,7 @@ public class GarageConfirmedOfferActivity extends AppCompatActivity {
     private void goToUpdateStatus(Offer offerSelected) {
         Intent intent = new Intent(this, ReservationUpdatesActivity.class);
         intent.putExtra("offer", offerSelected);
+        intent.putExtra("garage", garage);
         startActivity(intent);
     }
 
@@ -58,12 +58,12 @@ public class GarageConfirmedOfferActivity extends AppCompatActivity {
         btn_back_home = (Button) findViewById(R.id.btn_confirmed_devis_back_hom);
     }
 
-    private void initFields(){
+    private void initFields() {
         Bundle bundle = getIntent().getExtras();
         garage = bundle.getParcelable("garage");
     }
 
-    private void initListView(){
+    private void initListView() {
         offerDAO = new OfferDAO(this);
         offerDAO = offerDAO.openReadable();
         Offer[] confirmedOffers = offerDAO.getConfirmedOffersForGarage(garage.getNum_garage());

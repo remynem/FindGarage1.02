@@ -3,11 +3,12 @@ package com.example.user.findgarage10.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+
 /**
  * Created by student on 03-07-17.
  */
 
-public class Offer implements Parcelable{
+public class Offer implements Parcelable {
 
     //region POJO
 
@@ -102,6 +103,7 @@ public class Offer implements Parcelable{
                 " Description : " + description_offer + '\'' +
                 " Status : " + confirmed_offer;
     }
+
     //endregion
     //region parcelable
     protected Offer(Parcel in) {

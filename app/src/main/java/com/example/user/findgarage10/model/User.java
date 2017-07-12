@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by user on 3/07/17.
  */
 
-public class User implements Parcelable{
+public class User implements Parcelable {
 
     //region POJO
 

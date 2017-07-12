@@ -37,4 +37,20 @@
     <string name="offer_date">Received date</string>
     <string name="label_change_offer_status">Update status?</string>
     <string name="btn_update_offer_status">Update Status</string>
+    <string name="register_firstName_user">First Name</string>
+    <string name="register_lastName_user">Last Name</string>
+    <string name="register_email_user">Email</string>
+    <string name="register_tel_user">Tel</string>
+    <string name="register_adresse_user">Adress</string>
+    <string name="btn_register_save">Save</string>
+    <string name="User">User</string>
+    <string name="Garage">Garage</string>
+    <string name="register_name_garage">Name</string>
+    <string name="register_domaine_garage">Domaine</string>
+    <string name="register_adresse_format">Rue simonis 25, 1000 Bruxelles</string>
+    <string name="register_tel_format">0483217654</string>
+    <string name="register_email_format">email@domain.com</string>
+    <string name="register_name_example">Garage Vw Ixelles</string>
+    <string name="register_domaine_format">Mecanique</string>
+    <string name="btn_register_cancel">Cancel</string>
 </resources>

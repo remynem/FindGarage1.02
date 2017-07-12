@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.user.findgarage10.model.Offer;
-import com.example.user.findgarage10.model.User;
 
 /**
  * Created by student on 05-07-17.
@@ -46,26 +45,26 @@ public class OfferDAO {
     private SQLiteDatabase db;
     //endregion
 
-    public OfferDAO(Context context){
+    public OfferDAO(Context context) {
         this.context = context;
 
     }
 
-    public OfferDAO openReadable(){
+    public OfferDAO openReadable() {
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getReadableDatabase();
         db.execSQL(CREATE_REQUEST);
         return this;
     }
 
-    public OfferDAO openWritable(){
+    public OfferDAO openWritable() {
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getWritableDatabase();
         db.execSQL(CREATE_REQUEST);
         return this;
     }
 
-    public void close(){
+    public void close() {
         db.close();
         dbHelper.close();
     }
@@ -81,7 +80,7 @@ public class OfferDAO {
         return cv;
     }
 
-    public Offer cursorToOffer(Cursor cursor){
+    public Offer cursorToOffer(Cursor cursor) {
         int numOffer = cursor.getInt(cursor.getColumnIndex(COLUMN_NUM_OFFER));
         int numUser = cursor.getInt(cursor.getColumnIndex(COLUMN_NUM_USER));
         int numGarage = cursor.getInt(cursor.getColumnIndex(COLUMN_NUM_GARAGE));
@@ -94,17 +93,17 @@ public class OfferDAO {
     }
 
     //region insert update and delete
-    public Offer insertOffer(Offer offer){
+    public Offer insertOffer(Offer offer) {
         offer.setConfirmed_offer(PENDING_OFFER);
         ContentValues cv = offerToContentValues(offer);
         long id = db.insert(TABLE_OFFER, null, cv);
-        if(id != -1){
-            offer.setNum_offer((int)id);
+        if (id != -1) {
+            offer.setNum_offer((int) id);
         }
         return offer;
     }
 
-    public Offer confirmOffer(Offer offer){
+    public Offer confirmOffer(Offer offer) {
         offer.setConfirmed_offer("confirmed");
         String whereClause = COLUMN_NUM_OFFER + " = " + offer.getNum_offer() + " ; ";
         ContentValues cv = offerToContentValues(offer);
@@ -115,14 +114,14 @@ public class OfferDAO {
 
 
     //region select
-    public Offer[] getNotConfirmedOffersForUser(int numUser){
+    public Offer[] getNotConfirmedOffersForUser(int numUser) {
         String whereClause = COLUMN_CONFIRMED_OFFER + "='" + PENDING_OFFER + "' AND " + COLUMN_NUM_USER + "='" + numUser + "';";
         Cursor cursor = db.query(TABLE_OFFER, null, whereClause, null, null, null, null);
         int count = cursor.getCount();
         Offer[] offers = new Offer[0];
-        if(count > 0){
+        if (count > 0) {
             offers = new Offer[count];
-            for (int i = 0; i < count; i++){
+            for (int i = 0; i < count; i++) {
                 cursor.moveToPosition(i);
                 offers[i] = cursorToOffer(cursor);
             }
@@ -131,14 +130,14 @@ public class OfferDAO {
         return offers;
     }
 
-    public Offer[] getNotConfirmedOffersForGarage(int numGarage){
+    public Offer[] getNotConfirmedOffersForGarage(int numGarage) {
         String whereClause = COLUMN_CONFIRMED_OFFER + "='" + PENDING_OFFER + "' AND " + COLUMN_NUM_GARAGE + "='" + numGarage + "';";
         Cursor cursor = db.query(TABLE_OFFER, null, whereClause, null, null, null, null);
         int count = cursor.getCount();
         Offer[] offers = new Offer[0];
-        if(count > 0){
+        if (count > 0) {
             offers = new Offer[count];
-            for (int i = 0; i < count; i++){
+            for (int i = 0; i < count; i++) {
                 cursor.moveToPosition(i);
                 offers[i] = cursorToOffer(cursor);
             }
@@ -147,14 +146,14 @@ public class OfferDAO {
         return offers;
     }
 
-    public Offer[] getConfirmedOffersForGarage(int numGarage){
+    public Offer[] getConfirmedOffersForGarage(int numGarage) {
         String whereClause = COLUMN_CONFIRMED_OFFER + "!='" + PENDING_OFFER + "' AND " + COLUMN_NUM_GARAGE + "='" + numGarage + "';";
         Cursor cursor = db.query(TABLE_OFFER, null, whereClause, null, null, null, null);
         int count = cursor.getCount();
         Offer[] offers = new Offer[0];
-        if(count > 0){
+        if (count > 0) {
             offers = new Offer[count];
-            for (int i = 0; i < count; i++){
+            for (int i = 0; i < count; i++) {
                 cursor.moveToPosition(i);
                 offers[i] = cursorToOffer(cursor);
             }
@@ -163,14 +162,14 @@ public class OfferDAO {
         return offers;
     }
 
-    public Offer[] getConfirmedOffersForUser(int numUser){
+    public Offer[] getConfirmedOffersForUser(int numUser) {
         String whereClause = COLUMN_CONFIRMED_OFFER + "!='" + PENDING_OFFER + "' AND " + COLUMN_NUM_USER + "='" + numUser + "';";
         Cursor cursor = db.query(TABLE_OFFER, null, whereClause, null, null, null, null);
         int count = cursor.getCount();
         Offer[] offers = new Offer[0];
-        if(count > 0){
+        if (count > 0) {
             offers = new Offer[count];
-            for (int i = 0; i < count; i++){
+            for (int i = 0; i < count; i++) {
                 cursor.moveToPosition(i);
                 offers[i] = cursorToOffer(cursor);
             }
@@ -180,15 +179,15 @@ public class OfferDAO {
     }
 
 
-    public void initOfferDb(){
-        Offer of1 = new Offer(1,1,"12/05/12","entretien 15000km");
+    public void initOfferDb() {
+        Offer of1 = new Offer(1, 1, "12/05/12", "entretien 15000km");
         insertOffer(of1);
     }
 
-    public void updateReservationStatus(int numOffer, String newStatus){
+    public void updateReservationStatus(int numOffer, String newStatus) {
         String whereClause = COLUMN_NUM_OFFER + " = " + numOffer + " ; ";
         ContentValues cv = new ContentValues();
-        cv.put(COLUMN_CONFIRMED_OFFER , newStatus);
+        cv.put(COLUMN_CONFIRMED_OFFER, newStatus);
         db.update(TABLE_OFFER, cv, whereClause, null);
     }
 }

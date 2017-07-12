@@ -59,7 +59,7 @@ public class UserMyDevisActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private AlertDialog.Builder create(){
+    private AlertDialog.Builder create() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder
                 .setTitle("Erase hard drive")
@@ -96,7 +96,7 @@ public class UserMyDevisActivity extends AppCompatActivity {
 
     }
 
-    private void initList(){
+    private void initList() {
         offerDAO = new OfferDAO(this);
         /*offerDAO = offerDAO.openWritable();
         offerDAO.initOfferDb();*/

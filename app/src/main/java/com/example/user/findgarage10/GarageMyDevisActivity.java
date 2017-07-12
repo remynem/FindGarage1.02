@@ -1,8 +1,8 @@
 package com.example.user.findgarage10;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -64,10 +64,10 @@ public class GarageMyDevisActivity extends AppCompatActivity {
         offerDAO = new OfferDAO(this);
         offerDAO = offerDAO.openWritable();
         offerSelected = offerDAO.confirmOffer(offerSelected);
-        Toast.makeText(this, "Offer num "+offerSelected.getNum_offer()+ "has been " + offerSelected.getConfirmed_offer(), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Offer num " + offerSelected.getNum_offer() + "has been " + offerSelected.getConfirmed_offer(), Toast.LENGTH_LONG).show();
     }
 
-    private void initField(){
+    private void initField() {
         Bundle bundle = getIntent().getExtras();
         garageConnected = bundle.getParcelable("garage");
 
@@ -79,7 +79,7 @@ public class GarageMyDevisActivity extends AppCompatActivity {
         btn_show_confirmed_offer = (Button) findViewById(R.id.btn_garage_my_devis_show_confirmed_devis);
     }
 
-    private void initListView(){
+    private void initListView() {
         offerDAO = new OfferDAO(this);
         offerDAO = offerDAO.openReadable();
         Offer[] peddingOffers = offerDAO.getNotConfirmedOffersForGarage(garageConnected.getNum_garage());

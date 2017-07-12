@@ -34,7 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserListNearestGarageActivity extends FragmentActivity implements OnMapReadyCallback, GpsLocalisation.IGpsLocalisation{
+public class UserListNearestGarageActivity extends FragmentActivity implements OnMapReadyCallback, GpsLocalisation.IGpsLocalisation {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private ListView listView_garage;
     private MapFragment mapFragment;
@@ -61,7 +61,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
         listView_garage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String nomGarage =   (String) listView_garage.getItemAtPosition(i);
+                String nomGarage = (String) listView_garage.getItemAtPosition(i);
                 goToSendDevis(nomGarage);
             }
         });
@@ -80,7 +80,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
         startActivity(intent);
     }
 
-    public void goToSendDevis(String nomGarage){
+    public void goToSendDevis(String nomGarage) {
         garageDAO = new GarageDAO(this);
         garageDAO = garageDAO.openReadable();
         Garage garageTarget = garageDAO.getGarageByName(nomGarage);
@@ -90,6 +90,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
         intent.putExtra("garage", garageTarget);
         startActivity(intent);
     }
+
     public void initFields() {
         listView_garage = (ListView) findViewById(R.id.lv_list_nearest_garage);
         label_userConnected = (TextView) findViewById(R.id.tv_nearest_garage_name_user_connected);
@@ -104,7 +105,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
     private void initListView() {
         garagesKnown = getKnownGarage();
         List<String> garages = new ArrayList<>();
-        for (Map.Entry entry : garagesKnown.entrySet()){
+        for (Map.Entry entry : garagesKnown.entrySet()) {
             garages.add((String) entry.getKey());
         }
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, garages);
@@ -136,7 +137,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
     @Override
     public void localiser(Position position) {
         myCurrentlyPosition = new Position(position.getX(), position.getY());
-        Log.i("LOCALISATION",position.toString());
+        Log.i("LOCALISATION", position.toString());
     }
 
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
@@ -163,7 +164,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
         garageDAO = garageDAO.openReadable();
         Garage[] listGarages = garageDAO.getAllGarages();
 
-        for(int i = 0; i < listGarages.length; i++){
+        for (int i = 0; i < listGarages.length; i++) {
             List<Address> adresse = new ArrayList<>();
             Geocoder geocoder = new Geocoder(this);
             try {
@@ -171,7 +172,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            if(adresse.size() > 0){
+            if (adresse.size() > 0) {
                 Position position = new Position(adresse.get(0).getLongitude(), adresse.get(0).getLatitude());
                 knownGarages.put(listGarages[i].getName_garage(), position);
             }
@@ -185,13 +186,13 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
 
         LatLngBounds.Builder bld = new LatLngBounds.Builder();
         List<Marker> mMarkers = new ArrayList<>();
-        for(Map.Entry entry : garagesKnown.entrySet()){
+        for (Map.Entry entry : garagesKnown.entrySet()) {
             Position p = (Position) entry.getValue();
-            mMarkers.add(map.addMarker(new MarkerOptions().position(new LatLng(p.getX(), p.getY())).title((String)entry.getKey())));
+            mMarkers.add(map.addMarker(new MarkerOptions().position(new LatLng(p.getX(), p.getY())).title((String) entry.getKey())));
             bld.include(new LatLng(p.getX(), p.getY()));
         }
-        LatLngBounds bounds =  bld.build();
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100, 100,0));
+        LatLngBounds bounds = bld.build();
+        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100, 100, 0));
 
         map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 

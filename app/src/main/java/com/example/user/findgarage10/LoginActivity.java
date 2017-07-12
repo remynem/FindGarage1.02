@@ -21,7 +21,6 @@ import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static int CONNECTED = 1;
     //region declaration
     private EditText login_et_username;
     private EditText login_et_password;
@@ -72,19 +71,19 @@ public class LoginActivity extends AppCompatActivity {
     private void goToNearestGarage() {
         Intent intent;
         String loginType = spinner.getSelectedItem().toString();
-        if(loginType == "Garage"){
-            Garage garage =  verifyConnexionGarage(login_et_username.getText().toString(), login_et_password.getText().toString());
+        if (loginType == "Garage") {
+            Garage garage = verifyConnexionGarage(login_et_username.getText().toString(), login_et_password.getText().toString());
             intent = new Intent(this, GarageMyDevisActivity.class);
             intent.putExtra("garage", garage);
             startActivity(intent);
-        }else{
+        } else {
             User user = verifyConnexionUser(login_et_username.getText().toString(), login_et_password.getText().toString());
-            if(user != null){
+            if (user != null) {
                 intent = new Intent(this, UserListNearestGarageActivity.class);
                 intent.putExtra("user", user);
                 startActivity(intent);
-            }else{
-                Toast.makeText(this, "Connexion failed", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Connexion to database failed", Toast.LENGTH_LONG).show();
             }
         }
 
@@ -95,16 +94,16 @@ public class LoginActivity extends AppCompatActivity {
         garageDAO = new GarageDAO(this);
         garageDAO = garageDAO.openReadable();
         Garage toReturn = garageDAO.getGarageByLogin(name, domaine);
-        if(toReturn == null){
-            Toast.makeText(this, "Beug - garage", Toast.LENGTH_LONG).show();
+        if (toReturn == null) {
+            Toast.makeText(this, "login or password incorrect", Toast.LENGTH_LONG).show();
             garageDAO.close();
-        }else{
-            Toast.makeText(this, "Garage" + domaine, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Welcome", Toast.LENGTH_LONG).show();
         }
         return toReturn;
     }
 
-    public User verifyConnexionUser(String firstName, String lastName){
+    public User verifyConnexionUser(String firstName, String lastName) {
 
         userDAO = new UserDAO(this);
         //TODO init necessaire
@@ -114,12 +113,12 @@ public class LoginActivity extends AppCompatActivity {
         userDAO = userDAO.openReadable();
 
         if (userDAO.getUserByLogin(firstName, lastName) == null) {
-            Toast.makeText(this, "Beug user", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "login or password incorrect", Toast.LENGTH_LONG).show();
             userDAO.close();
             return null;
         } else {
             User user = userDAO.getUserByLogin(firstName, lastName);
-            Toast.makeText(this, "Bienvenue " + user.getNum_user(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Welcome " + user.getLastName_user(), Toast.LENGTH_LONG).show();
             return user;
         }
     }

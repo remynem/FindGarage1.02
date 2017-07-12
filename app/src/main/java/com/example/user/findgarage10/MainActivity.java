@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
         btn_main_goto_login = (Button) findViewById(R.id.main_goto_login);
-        //btn_main_goto_signup = (Button) findViewById(R.id.main_goto_signup);
+        btn_main_goto_signup = (Button) findViewById(R.id.main_goto_signup);
 
         btn_main_goto_login.setOnClickListener(this);
-        //btn_main_goto_signup.setOnClickListener(this);
+        btn_main_goto_signup.setOnClickListener(this);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 gotoLogin();
                 break;
             case R.id.main_goto_signup:
-                //gotoSignUp();
+                gotoSignUp();
                 break;
             default:
                 break;
@@ -48,9 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gotoActivity(LoginActivity.class);
     }
 
-    /*private void gotoSignUp() {
-        gotoActivity(SignUpActivity.class);
-    }*/
+    private void gotoSignUp() {
+        gotoActivity(RegisterActivity.class);
+    }
 
     private void gotoActivity(Class target) {
         Intent intent = new Intent(this, target);

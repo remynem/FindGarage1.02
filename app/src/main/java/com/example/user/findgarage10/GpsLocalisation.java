@@ -22,8 +22,9 @@ public class GpsLocalisation implements LocationListener {
     //region Callback
     private IGpsLocalisation callback;
     private Context context;
+
     //endregion
-    public GpsLocalisation(){
+    public GpsLocalisation() {
 
     }
 
@@ -41,12 +42,12 @@ public class GpsLocalisation implements LocationListener {
             return;
         }
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1,0,this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 0, this);
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        if(callback == null) {
+        if (callback == null) {
             callback.localiser(new Position(
                             location.getLatitude(),
                             location.getLongitude()

@@ -36,12 +36,13 @@ public class GarageDAO {
     private ConnexionDB dbHelper;
     private Context context;
     private SQLiteDatabase db;
+
     //endregion
     public GarageDAO(Context context) {
         this.context = context;
     }
 
-    public GarageDAO openReadable(){
+    public GarageDAO openReadable() {
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getReadableDatabase();
         db.execSQL(CREATE_REQUEST);
@@ -49,14 +50,14 @@ public class GarageDAO {
     }
 
 
-    public GarageDAO openWritable(){
+    public GarageDAO openWritable() {
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getWritableDatabase();
         db.execSQL(CREATE_REQUEST);
         return this;
     }
 
-    public void close(){
+    public void close() {
         db.close();
         dbHelper.close();
     }
@@ -73,7 +74,7 @@ public class GarageDAO {
         return cv;
     }
 
-    public Garage cursorToGarage(Cursor cursor){
+    public Garage cursorToGarage(Cursor cursor) {
         int numGarage = cursor.getInt(cursor.getColumnIndex(COLUMN_NUM_GARAGE));
         String nameGarage = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_GARAGE));
         String domainGarage = cursor.getString(cursor.getColumnIndex(COLUMN_DOMAINE_GARAGE));
@@ -84,17 +85,17 @@ public class GarageDAO {
         return garage;
     }
 
-    public Garage insertGarage(Garage garage){
+    public Garage insertGarage(Garage garage) {
         ContentValues cv = garageToContentValues(garage);
         long id = db.insert(TABLE_GARAGE, null, cv);
-        if(id != -1){
-            garage.setNum_garage((int)id);
+        if (id != -1) {
+            garage.setNum_garage((int) id);
             return garage;
         }
         return garage;
     }
 
-    public void initTableGarage(){
+    public void initTableGarage() {
         Garage garage_ixelles = new Garage("Toyota ixelles", "Mecanique", "toyota-ixelles@gmail.com", "027553595", "Rue Leon Cuissez 29, 1050 Bruxelles");
         Garage garage_mail = new Garage("Dieteren Mail", "Carrosserie", "dieteren-mail@gmail.com", "027553595", "Rue du Mail 50, 1050 Ixelles");
         insertGarage(garage_ixelles);
@@ -116,23 +117,23 @@ public class GarageDAO {
         return null;
     }
 
-    public Garage getGarageByName(String nameGarage){
+    public Garage getGarageByName(String nameGarage) {
         String whereClause = COLUMN_NAME_GARAGE + "='" + nameGarage + "';";
-        Cursor cursor = db.query(TABLE_GARAGE, null, whereClause, null, null, null,null);
+        Cursor cursor = db.query(TABLE_GARAGE, null, whereClause, null, null, null, null);
         int count = cursor.getCount();
-        if(count > 0){
+        if (count > 0) {
             cursor.moveToFirst();
             return cursorToGarage(cursor);
         }
         return null;
     }
 
-    public Garage getGarageByLogin(String namegarage, String domaineGarage){
+    public Garage getGarageByLogin(String namegarage, String domaineGarage) {
         //String whereClause = COLUMN_NAME_GARAGE + "='" + namegarage + "' AND " + COLUMN_DOMAINE_GARAGE + "='" + domaineGarage + "';";
         String whereClause = COLUMN_DOMAINE_GARAGE + "='" + domaineGarage + "';";
-        Cursor cursor = db.query(TABLE_GARAGE, null, whereClause, null, null, null,null);
+        Cursor cursor = db.query(TABLE_GARAGE, null, whereClause, null, null, null, null);
         int count = cursor.getCount();
-        if(count > 0){
+        if (count > 0) {
             cursor.moveToFirst();
             return cursorToGarage(cursor);
         }

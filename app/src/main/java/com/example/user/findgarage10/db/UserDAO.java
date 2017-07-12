@@ -38,11 +38,12 @@ public class UserDAO {
     private ConnexionDB dbHelper;
     private Context context;
     private SQLiteDatabase db;
+
     public UserDAO(Context context) {
         this.context = context;
     }
 
-    public UserDAO openReadable(){
+    public UserDAO openReadable() {
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getReadableDatabase();
         db.execSQL(CREATE_REQUEST);
@@ -50,14 +51,14 @@ public class UserDAO {
     }
     //endregion
 
-    public UserDAO openWritable(){
+    public UserDAO openWritable() {
         dbHelper = new ConnexionDB(context);
         db = dbHelper.getWritableDatabase();
         db.execSQL(CREATE_REQUEST);
         return this;
     }
 
-    public void close(){
+    public void close() {
         db.close();
         dbHelper.close();
     }
@@ -74,17 +75,17 @@ public class UserDAO {
         return cv;
     }
 
-    public User insertUser(User user){
+    public User insertUser(User user) {
         ContentValues cv = userToContentValues(user);
         long id = db.insert(TABLE_USER, null, cv);
-        if(id != -1){
-            user.setNum_user((int)id);
+        if (id != -1) {
+            user.setNum_user((int) id);
             return user;
         }
         return user;
     }
 
-    public User cursorToUser(Cursor cursor){
+    public User cursorToUser(Cursor cursor) {
         int numUser = cursor.getInt(cursor.getColumnIndex(COLUMN_NUM_USER));
         String firstName = cursor.getString(cursor.getColumnIndex(COLUMN_FIRST_NAME_USER));
         String lastName = cursor.getString(cursor.getColumnIndex(COLUMN_LAST_NAME_USER));
@@ -95,22 +96,22 @@ public class UserDAO {
         return user;
     }
 
-    public User getUserByNumUser(int numUser){
-        String whereClause = COLUMN_NUM_USER + " = "+numUser;
+    public User getUserByNumUser(int numUser) {
+        String whereClause = COLUMN_NUM_USER + " = " + numUser;
         Cursor cursor = db.query(TABLE_USER, null, whereClause, null, null, null, null);
         int count = cursor.getCount();
-        if(count > 0){
+        if (count > 0) {
             cursor.moveToFirst();
             return cursorToUser(cursor);
         }
         return null;
     }
 
-    public User getUserByLogin(String firstName, String lastName){
+    public User getUserByLogin(String firstName, String lastName) {
         String whereClause = COLUMN_FIRST_NAME_USER + "='" + firstName + "' AND " + COLUMN_LAST_NAME_USER + "='" + lastName + "';";
-        Cursor cursor = db.query(TABLE_USER, null, whereClause, null, null, null,null);
+        Cursor cursor = db.query(TABLE_USER, null, whereClause, null, null, null, null);
         int count = cursor.getCount();
-        if(count > 0){
+        if (count > 0) {
             cursor.moveToFirst();
             return cursorToUser(cursor);
         }
@@ -118,8 +119,7 @@ public class UserDAO {
     }
 
 
-
-    public void initTableUser(){
+    public void initTableUser() {
         User user = new User("paul", "rem", "bt@email.be", "04526", "adresse");
         User user2 = new User("kevin", "test", "bt@email.be", "04526", "adresse");
         insertUser(user);

@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by user on 3/07/17.
  */
 
-public class Garage implements Parcelable{
+public class Garage implements Parcelable {
 
     //region POJO
 

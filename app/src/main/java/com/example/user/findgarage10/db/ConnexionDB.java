@@ -3,7 +3,6 @@ package com.example.user.findgarage10.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Created by student on 03-07-17.
