@@ -17,6 +17,7 @@ public class GarageDAO {
     public static final String COLUMN_NUM_GARAGE = "num_garage";
     public static final String COLUMN_NAME_GARAGE = "name_garage";
     public static final String COLUMN_DOMAINE_GARAGE = "domaine_garage";
+    public static final String COLUMN_PASSWORD_GARAGE = "pwd_garage";
     public static final String COLUMN_EMAIL_GARAGE = "email_garage";
     public static final String COLUMN_TEL_GARAGE = "tel_garage";
     public static final String COLUMN_ADRESS_GARAGE = "adress_garage";
@@ -26,6 +27,7 @@ public class GarageDAO {
             + COLUMN_NUM_GARAGE + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_NAME_GARAGE + " TEXT NOT NULL, "
             + COLUMN_DOMAINE_GARAGE + " TEXT NOT NULL, "
+            + COLUMN_PASSWORD_GARAGE + " TEXT NOT NULL, "
             + COLUMN_EMAIL_GARAGE + " TEXT NOT NULL, "
             + COLUMN_TEL_GARAGE + " TEXT NOT NULL, "
             + COLUMN_ADRESS_GARAGE + " TEXT NOT NULL" +
@@ -68,6 +70,7 @@ public class GarageDAO {
         cv.put(COLUMN_NAME_GARAGE, garage.getName_garage());
         cv.put(COLUMN_DOMAINE_GARAGE, garage.getDomain_garage());
         cv.put(COLUMN_EMAIL_GARAGE, garage.getEmail_garage());
+        cv.put(COLUMN_PASSWORD_GARAGE, garage.getPwd_garage());
         cv.put(COLUMN_TEL_GARAGE, garage.getTel_garage());
         cv.put(COLUMN_ADRESS_GARAGE, garage.getAdress_garage());
 
@@ -78,10 +81,11 @@ public class GarageDAO {
         int numGarage = cursor.getInt(cursor.getColumnIndex(COLUMN_NUM_GARAGE));
         String nameGarage = cursor.getString(cursor.getColumnIndex(COLUMN_NAME_GARAGE));
         String domainGarage = cursor.getString(cursor.getColumnIndex(COLUMN_DOMAINE_GARAGE));
+        String pwdGarage = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD_GARAGE));
         String emailGarage = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL_GARAGE));
         String telGarage = cursor.getString(cursor.getColumnIndex(COLUMN_TEL_GARAGE));
         String adressGarage = cursor.getString(cursor.getColumnIndex(COLUMN_ADRESS_GARAGE));
-        Garage garage = new Garage(numGarage, nameGarage, domainGarage, emailGarage, telGarage, adressGarage);
+        Garage garage = new Garage(numGarage, nameGarage, domainGarage, emailGarage, pwdGarage, telGarage, adressGarage);
         return garage;
     }
 
@@ -96,10 +100,10 @@ public class GarageDAO {
     }
 
     public void initTableGarage() {
-        Garage garage_ixelles = new Garage("Toyota ixelles", "Mecanique", "toyota-ixelles@gmail.com", "027553595", "Rue Leon Cuissez 29, 1050 Bruxelles");
-        Garage garage_mail = new Garage("Dieteren Mail", "Carrosserie", "dieteren-mail@gmail.com", "027553595", "Rue du Mail 50, 1050 Ixelles");
-        insertGarage(garage_ixelles);
-        insertGarage(garage_mail);
+        /*Garage garage_ixelles = new Garage("Toyota ixelles", "Mecanique", "toyota-ixelles@gmail.com", "027553595", "Rue Leon Cuissez 29, 1050 Bruxelles");
+        Garage garage_mail = new Garage("Dieteren Mail", "Carrosserie", "dieteren-mail@gmail.com", "027553595", "Rue du Mail 50, 1050 Ixelles");*/
+        /*insertGarage(garage_ixelles);
+        insertGarage(garage_mail);*/
     }
 
     public Garage[] getAllGarages() {
@@ -128,9 +132,9 @@ public class GarageDAO {
         return null;
     }
 
-    public Garage getGarageByLogin(String namegarage, String domaineGarage) {
-        //String whereClause = COLUMN_NAME_GARAGE + "='" + namegarage + "' AND " + COLUMN_DOMAINE_GARAGE + "='" + domaineGarage + "';";
-        String whereClause = COLUMN_DOMAINE_GARAGE + "='" + domaineGarage + "';";
+    public Garage getGarageByLogin(String nameGarage, String password) {
+        String whereClause = COLUMN_NAME_GARAGE + "='" + nameGarage + "' AND " + COLUMN_PASSWORD_GARAGE + " = '" + password + "';";
+
         Cursor cursor = db.query(TABLE_GARAGE, null, whereClause, null, null, null, null);
         int count = cursor.getCount();
         if (count > 0) {

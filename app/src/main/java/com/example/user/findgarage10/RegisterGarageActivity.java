@@ -10,11 +10,13 @@ import android.widget.Toast;
 
 import com.example.user.findgarage10.db.GarageDAO;
 import com.example.user.findgarage10.model.Garage;
+import com.example.user.findgarage10.util.HashMyString;
 
 public class RegisterGarageActivity extends AppCompatActivity {
 
     private EditText et_nameGarage;
     private EditText et_domainGarage;
+    private EditText et_pwdGarage;
     private EditText et_emailGarage;
     private EditText et_telGarage;
     private EditText et_adressGarage;
@@ -23,7 +25,7 @@ public class RegisterGarageActivity extends AppCompatActivity {
     private Button cancel;
 
     private GarageDAO garageDAO;
-
+    private HashMyString hashMyString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +57,12 @@ public class RegisterGarageActivity extends AppCompatActivity {
         String nameGarage = getStringFromEditText(et_nameGarage);
         String domainGarage = getStringFromEditText(et_domainGarage);
         String emailGarage = getStringFromEditText(et_emailGarage);
+        String pwdGarage = getStringFromEditText(et_pwdGarage);
         String telGarage = getStringFromEditText(et_telGarage);
         String adressGarage = getStringFromEditText(et_adressGarage);
 
-        Garage newGarage = new Garage(nameGarage, domainGarage, emailGarage, telGarage, adressGarage);
+        hashMyString = new HashMyString(pwdGarage);
+        Garage newGarage = new Garage(nameGarage, domainGarage, emailGarage, hashMyString.getMyHash(), telGarage, adressGarage);
 
         garageDAO = new GarageDAO(this);
         garageDAO = garageDAO.openWritable();
@@ -70,6 +74,7 @@ public class RegisterGarageActivity extends AppCompatActivity {
     private void initView() {
         et_nameGarage = (EditText) findViewById(R.id.register_name_garage);
         et_domainGarage = (EditText) findViewById(R.id.register_domaine_garage);
+        et_pwdGarage = (EditText) findViewById(R.id.register_password_garage);
         et_emailGarage = (EditText) findViewById(R.id.register_email_garage);
         et_telGarage = (EditText) findViewById(R.id.register_tel_garage);
         et_adressGarage = (EditText) findViewById(R.id.register_adresse_garage);

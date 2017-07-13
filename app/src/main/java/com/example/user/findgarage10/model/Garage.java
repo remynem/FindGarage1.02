@@ -15,23 +15,25 @@ public class Garage implements Parcelable {
     private int num_garage;
     private String name_garage;
     private String domain_garage;
+    private String pwd_garage;
     private String email_garage;
     private String tel_garage;
     private String adress_garage;
     //endregion
     //region constructors
 
-    public Garage(String name_garage, String domain_garage, String email_garage, String tel_garage, String adress_garage) {
+    public Garage(String name_garage, String domain_garage, String email_garage, String pwd_garage, String tel_garage, String adress_garage) {
         this.num_garage = -1;
         this.name_garage = name_garage;
         this.domain_garage = domain_garage;
         this.email_garage = email_garage;
+        this.pwd_garage = pwd_garage;
         this.tel_garage = tel_garage;
         this.adress_garage = adress_garage;
     }
 
-    public Garage(int num_garage, String name_garage, String domain_garage, String email_garage, String tel_garage, String adress_garage) {
-        this(name_garage, domain_garage, email_garage, tel_garage, adress_garage);
+    public Garage(int num_garage, String name_garage, String domain_garage, String email_garage, String pwd_garage, String tel_garage, String adress_garage) {
+        this(name_garage, domain_garage, email_garage, pwd_garage, tel_garage, adress_garage);
         this.num_garage = num_garage;
     }
 
@@ -61,6 +63,14 @@ public class Garage implements Parcelable {
 
     public void setDomain_garage(String domain_garage) {
         this.domain_garage = domain_garage;
+    }
+
+    public String getPwd_garage(){
+        return pwd_garage;
+    }
+
+    public void setPwd_garage(String newPwd){
+        this.pwd_garage = newPwd;
     }
 
     public String getEmail_garage() {
@@ -109,6 +119,7 @@ public class Garage implements Parcelable {
         name_garage = in.readString();
         domain_garage = in.readString();
         email_garage = in.readString();
+        pwd_garage = in.readString();
         tel_garage = in.readString();
         adress_garage = in.readString();
     }
@@ -136,6 +147,7 @@ public class Garage implements Parcelable {
         parcel.writeString(name_garage);
         parcel.writeString(domain_garage);
         parcel.writeString(email_garage);
+        parcel.writeString(pwd_garage);
         parcel.writeString(tel_garage);
         parcel.writeString(adress_garage);
     }

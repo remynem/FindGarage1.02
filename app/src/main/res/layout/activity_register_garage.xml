@@ -34,6 +34,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <EditText
+            android:id="@+id/register_password_garage"
+            android:hint="@string/register_password_format"
+            android:inputType="textPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
             android:id="@+id/register_email_garage"
             android:hint="@string/register_email_format"
             android:inputType="text"

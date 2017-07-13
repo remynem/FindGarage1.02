@@ -194,7 +194,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
         LatLngBounds bounds = bld.build();
         map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100, 100, 0));
 
-        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
         map.animateCamera(CameraUpdateFactory.zoomTo(12), 1000, null);
     }

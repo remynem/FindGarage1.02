@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.user.findgarage10.model.User;
 
@@ -19,6 +20,7 @@ public class UserDAO {
     public static final String COLUMN_FIRST_NAME_USER = "firstName_user";
     public static final String COLUMN_LAST_NAME_USER = "lastName_user";
     public static final String COLUMN_EMAIL_USER = "email_user";
+    public static final String COLUMN_PASSWORD_USER = "pwd_user";
     public static final String COLUMN_TEL_USER = "tel_user";
     public static final String COLUMN_ADRESS_USER = "adress_user";
     //endregion
@@ -29,6 +31,7 @@ public class UserDAO {
             + COLUMN_FIRST_NAME_USER + " TEXT NOT NULL, "
             + COLUMN_LAST_NAME_USER + " TEXT NOT NULL, "
             + COLUMN_EMAIL_USER + " TEXT NOT NULL, "
+            + COLUMN_PASSWORD_USER + " TEXT NOT NULL, "
             + COLUMN_TEL_USER + " TEXT NOT NULL, "
             + COLUMN_ADRESS_USER + " TEXT NOT NULL" +
             " );";
@@ -69,6 +72,7 @@ public class UserDAO {
         cv.put(COLUMN_FIRST_NAME_USER, user.getFirstName_user());
         cv.put(COLUMN_LAST_NAME_USER, user.getLastName_user());
         cv.put(COLUMN_EMAIL_USER, user.getEmailUser());
+        cv.put(COLUMN_PASSWORD_USER, user.getPwdUser());
         cv.put(COLUMN_TEL_USER, user.getTelUser());
         cv.put(COLUMN_ADRESS_USER, user.getAdresseUser());
 
@@ -90,9 +94,10 @@ public class UserDAO {
         String firstName = cursor.getString(cursor.getColumnIndex(COLUMN_FIRST_NAME_USER));
         String lastName = cursor.getString(cursor.getColumnIndex(COLUMN_LAST_NAME_USER));
         String emailUser = cursor.getString(cursor.getColumnIndex(COLUMN_EMAIL_USER));
+        String pwdUser = cursor.getString(cursor.getColumnIndex(COLUMN_PASSWORD_USER));
         String telUser = cursor.getString(cursor.getColumnIndex(COLUMN_TEL_USER));
         String adressUser = cursor.getString(cursor.getColumnIndex(COLUMN_ADRESS_USER));
-        User user = new User(numUser, firstName, lastName, emailUser, telUser, adressUser);
+        User user = new User(numUser, firstName, lastName, emailUser, pwdUser, telUser, adressUser);
         return user;
     }
 
@@ -107,8 +112,9 @@ public class UserDAO {
         return null;
     }
 
-    public User getUserByLogin(String firstName, String lastName) {
-        String whereClause = COLUMN_FIRST_NAME_USER + "='" + firstName + "' AND " + COLUMN_LAST_NAME_USER + "='" + lastName + "';";
+    public User getUserByLogin(String login, String password) {
+        String whereClause = COLUMN_FIRST_NAME_USER + "='" + login + "' AND " + COLUMN_PASSWORD_USER + " LIKE '" + password + "';";
+        Log.i("test pwd", whereClause);
         Cursor cursor = db.query(TABLE_USER, null, whereClause, null, null, null, null);
         int count = cursor.getCount();
         if (count > 0) {
@@ -120,10 +126,10 @@ public class UserDAO {
 
 
     public void initTableUser() {
-        User user = new User("paul", "rem", "bt@email.be", "04526", "adresse");
+        /*User user = new User("paul", "rem", "bt@email.be", "04526", "adresse");
         User user2 = new User("kevin", "test", "bt@email.be", "04526", "adresse");
         insertUser(user);
-        insertUser(user2);
+        insertUser(user2);*/
     }
 
     public User[] getAllUsers() {

@@ -15,6 +15,7 @@ import com.example.user.findgarage10.db.GarageDAO;
 import com.example.user.findgarage10.db.UserDAO;
 import com.example.user.findgarage10.model.Garage;
 import com.example.user.findgarage10.model.User;
+import com.example.user.findgarage10.util.HashMyString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class LoginActivity extends AppCompatActivity {
     private Spinner spinner;
     private UserDAO userDAO;
     private GarageDAO garageDAO;
+    private HashMyString hashMyString;
     //endregion
 
     @Override
@@ -72,12 +74,23 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent;
         String loginType = spinner.getSelectedItem().toString();
         if (loginType == "Garage") {
-            Garage garage = verifyConnexionGarage(login_et_username.getText().toString(), login_et_password.getText().toString());
-            intent = new Intent(this, GarageMyDevisActivity.class);
-            intent.putExtra("garage", garage);
-            startActivity(intent);
+            String nameGarage = login_et_username.getText().toString();
+            String pwdGarage = login_et_password.getText().toString();
+            hashMyString = new HashMyString(pwdGarage);
+
+            Garage garage = verifyConnexionGarage(nameGarage, hashMyString.getMyHash());
+            if (garage != null) {
+                intent = new Intent(this, GarageMyDevisActivity.class);
+                intent.putExtra("garage", garage);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "Connexion to database failed", Toast.LENGTH_LONG).show();
+            }
         } else {
-            User user = verifyConnexionUser(login_et_username.getText().toString(), login_et_password.getText().toString());
+            String nameUser = login_et_username.getText().toString();
+            String pwdUser = login_et_password.getText().toString();
+            hashMyString = new HashMyString(pwdUser);
+            User user = verifyConnexionUser(nameUser, hashMyString.getMyHash());
             if (user != null) {
                 intent = new Intent(this, UserListNearestGarageActivity.class);
                 intent.putExtra("user", user);
@@ -90,10 +103,11 @@ public class LoginActivity extends AppCompatActivity {
         //startActivity(intent);
     }
 
-    private Garage verifyConnexionGarage(String name, String domaine) {
+    private Garage verifyConnexionGarage(String name, String password) {
         garageDAO = new GarageDAO(this);
         garageDAO = garageDAO.openReadable();
-        Garage toReturn = garageDAO.getGarageByLogin(name, domaine);
+        Garage toReturn = garageDAO.getGarageByLogin(name, password);
+
         if (toReturn == null) {
             Toast.makeText(this, "login or password incorrect", Toast.LENGTH_LONG).show();
             garageDAO.close();
@@ -103,22 +117,18 @@ public class LoginActivity extends AppCompatActivity {
         return toReturn;
     }
 
-    public User verifyConnexionUser(String firstName, String lastName) {
+    public User verifyConnexionUser(String firstName, String password) {
 
         userDAO = new UserDAO(this);
-        //TODO init necessaire
-        /*userDAO = userDAO.openWritable();
-        userDAO.initTableUser();*/
-
         userDAO = userDAO.openReadable();
 
-        if (userDAO.getUserByLogin(firstName, lastName) == null) {
+        if (userDAO.getUserByLogin(firstName, password) == null) {
             Toast.makeText(this, "login or password incorrect", Toast.LENGTH_LONG).show();
             userDAO.close();
             return null;
         } else {
-            User user = userDAO.getUserByLogin(firstName, lastName);
-            Toast.makeText(this, "Welcome " + user.getLastName_user(), Toast.LENGTH_LONG).show();
+            User user = userDAO.getUserByLogin(firstName, password);
+            //Toast.makeText(this, "Welcome " + user.getLastName_user(), Toast.LENGTH_LONG).show();
             return user;
         }
     }

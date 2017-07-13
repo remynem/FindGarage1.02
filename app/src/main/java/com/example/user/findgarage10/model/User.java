@@ -16,23 +16,25 @@ public class User implements Parcelable {
     private String firstName_user;
     private String lastName_user;
     private String emailUser;
+    private String pwdUser;
     private String telUser;
     private String adresseUser;
     //endregion
 
     //region constructors
 
-    public User(String firstName_user, String lastName_user, String emailUser, String telUser, String adresseUser) {
+    public User(String firstName_user, String lastName_user, String emailUser, String pwdUser, String telUser, String adresseUser) {
         this.num_user = -1;
         this.firstName_user = firstName_user;
         this.lastName_user = lastName_user;
         this.emailUser = emailUser;
+        this.pwdUser = pwdUser;
         this.telUser = telUser;
         this.adresseUser = adresseUser;
     }
 
-    public User(int num_user, String firstName_user, String lastName_user, String emailUser, String telUser, String adresseUser) {
-        this(firstName_user, lastName_user, emailUser, telUser, adresseUser);
+    public User(int num_user, String firstName_user, String lastName_user, String emailUser, String pwdUser, String telUser, String adresseUser) {
+        this(firstName_user, lastName_user, emailUser, pwdUser, telUser, adresseUser);
         setNum_user(num_user);
     }
 
@@ -71,6 +73,14 @@ public class User implements Parcelable {
         this.emailUser = emailUser;
     }
 
+    public String getPwdUser(){
+        return pwdUser;
+    }
+
+    public void setPwdUser(String newPwd){
+        this.pwdUser = newPwd;
+    }
+
     public String getTelUser() {
         return telUser;
     }
@@ -101,6 +111,7 @@ public class User implements Parcelable {
         firstName_user = in.readString();
         lastName_user = in.readString();
         emailUser = in.readString();
+        pwdUser = in.readString();
         telUser = in.readString();
         adresseUser = in.readString();
     }
@@ -128,6 +139,7 @@ public class User implements Parcelable {
         parcel.writeString(firstName_user);
         parcel.writeString(lastName_user);
         parcel.writeString(emailUser);
+        parcel.writeString(pwdUser);
         parcel.writeString(telUser);
         parcel.writeString(adresseUser);
     }
