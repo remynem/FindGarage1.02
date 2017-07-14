@@ -64,7 +64,6 @@ public class GpsLocalisation implements LocationListener {
             if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
 
-
             } else {
                 ActivityCompat.requestPermissions((Activity) context,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
