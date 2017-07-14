@@ -36,6 +36,7 @@ import java.util.Map;
 
 public class UserListNearestGarageActivity extends FragmentActivity implements OnMapReadyCallback, GpsLocalisation.IGpsLocalisation {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    public static final int MY_PERMISSIONS_REQUEST_INTERNET = 88;
     private ListView listView_garage;
     private MapFragment mapFragment;
     private Position myCurrentlyPosition;
@@ -104,6 +105,11 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
 
     private void initListView() {
         garagesKnown = getKnownGarage();
+
+        if (garagesKnown == null || garagesKnown.size() == 0) {
+         return;
+        }
+
         List<String> garages = new ArrayList<>();
         for (Map.Entry entry : garagesKnown.entrySet()) {
             garages.add((String) entry.getKey());
@@ -143,7 +149,6 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getMyPosition();
@@ -151,18 +156,20 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
                 }
 
             }
+
         }
     }
 
     private Map<String, Position> getKnownGarage() {
         Map<String, Position> knownGarages = new HashMap<>();
         garageDAO = new GarageDAO(this);
-        //TODO init necessaire
-        /*garageDAO = garageDAO.openWritable();
-        garageDAO.initTableGarage();*/
-
         garageDAO = garageDAO.openReadable();
         Garage[] listGarages = garageDAO.getAllGarages();
+
+        //Test de garde
+        if(listGarages == null || listGarages.length == 0) {
+         return null;
+        }
 
         for (int i = 0; i < listGarages.length; i++) {
             List<Address> adresse = new ArrayList<>();
@@ -181,21 +188,27 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
     }
 
     public void setMyMap(GoogleMap map) {
-        map.clear();
         garagesKnown = getKnownGarage();
 
-        LatLngBounds.Builder bld = new LatLngBounds.Builder();
-        List<Marker> mMarkers = new ArrayList<>();
-        for (Map.Entry entry : garagesKnown.entrySet()) {
-            Position p = (Position) entry.getValue();
-            mMarkers.add(map.addMarker(new MarkerOptions().position(new LatLng(p.getX(), p.getY())).title((String) entry.getKey())));
-            bld.include(new LatLng(p.getX(), p.getY()));
+
+        if(garagesKnown != null && garagesKnown.size() > 0 ) {
+
+            LatLngBounds.Builder bld = new LatLngBounds.Builder();
+            List<Marker> mMarkers = new ArrayList<>();
+            for (Map.Entry entry : garagesKnown.entrySet()) {
+                Position p = (Position) entry.getValue();
+                Log.i("Position", p.toString());
+                mMarkers.add(map.addMarker(new MarkerOptions().position(new LatLng(p.getY(), p.getX())).title((String) entry.getKey())));
+                bld.include(new LatLng(p.getY(), p.getX()));
+            }
+            LatLngBounds bounds = bld.build();
+            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100, 100, 0));
+            map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            map.animateCamera(CameraUpdateFactory.zoomTo(12), 1000, null);
+        }else{
+            map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(50.83,4.353637)));
+
         }
-        LatLngBounds bounds = bld.build();
-        map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100, 100, 0));
-
-        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-
-        map.animateCamera(CameraUpdateFactory.zoomTo(12), 1000, null);
+//
     }
 }

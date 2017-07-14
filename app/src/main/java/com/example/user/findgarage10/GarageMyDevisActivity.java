@@ -58,13 +58,13 @@ public class GarageMyDevisActivity extends AppCompatActivity {
     }
 
     private void goToSelectedItem(Offer offerSelected) {
-        Toast.makeText(this, offerSelected.toString(), Toast.LENGTH_LONG).show();
         //TODO add popup for confirm or not the offer
         //TODO if confirm, add to resa & change status, else delete
         offerDAO = new OfferDAO(this);
         offerDAO = offerDAO.openWritable();
         offerSelected = offerDAO.confirmOffer(offerSelected);
         Toast.makeText(this, "Offer num " + offerSelected.getNum_offer() + "has been " + offerSelected.getConfirmed_offer(), Toast.LENGTH_LONG).show();
+        onRestart();
     }
 
     private void initField() {

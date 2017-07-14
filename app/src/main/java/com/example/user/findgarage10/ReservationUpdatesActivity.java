@@ -90,6 +90,7 @@ public class ReservationUpdatesActivity extends AppCompatActivity {
         list_type_user.add("Car Ready");
         list_type_user.add("Piece ordered");
         list_type_user.add("In process");
+        list_type_user.add("Closed");
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list_type_user);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statusSpinner.setAdapter(adapter);
