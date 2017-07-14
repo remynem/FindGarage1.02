@@ -42,6 +42,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
     private Position myCurrentlyPosition;
     private TextView label_userConnected;
     private UserDAO userDAO;
+    private Button logOut;
     private GarageDAO garageDAO;
     private Map<String, Position> garagesKnown;
     private User userConnected;
@@ -72,7 +73,18 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
                 goToMyDevis();
             }
         });
+        logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logOut();
+            }
+        });
         displayMap();
+    }
+
+    private void logOut() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
     private void goToMyDevis() {
@@ -96,6 +108,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
         listView_garage = (ListView) findViewById(R.id.lv_list_nearest_garage);
         label_userConnected = (TextView) findViewById(R.id.tv_nearest_garage_name_user_connected);
         btn_go_to_user_my_devis = (Button) findViewById(R.id.btn_goToMyDevis);
+        logOut = (Button) findViewById(R.id.btn_Logout);
     }
 
     public void getUserConnected() {
