@@ -26,9 +26,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText login_et_username;
     private EditText login_et_password;
     private Button login_btn_login;
-    private Spinner spinner;
+    private Button btn_goto_signup;
+    //private Spinner spinner;
     private UserDAO userDAO;
-    private GarageDAO garageDAO;
+    //private GarageDAO garageDAO;
     private HashMyString hashMyString;
     //endregion
 
@@ -49,8 +50,10 @@ public class LoginActivity extends AppCompatActivity {
         login_et_username = (EditText) findViewById(R.id.login_et_username);
         login_et_password = (EditText) findViewById(R.id.login_et_password);
         login_btn_login = (Button) findViewById(R.id.login_btn_login);
+        btn_goto_signup = (Button) findViewById(R.id.login_btn_sign_up);
+        //login_btn_sign_up
 
-        initSpinnerTypeUser();
+        //initSpinnerTypeUser();
 
         login_btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,22 +61,34 @@ public class LoginActivity extends AppCompatActivity {
                 goToNearestGarage();
             }
         });
+        btn_goto_signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToSignUp();
+            }
+        });
     }
 
-    private void initSpinnerTypeUser() {
-        spinner = (Spinner) findViewById(R.id.login_spinner_type_user);
-        List<String> list_type_user = new ArrayList<>();
-        list_type_user.add("User");
-        list_type_user.add("Garage");
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, list_type_user);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+    private void goToSignUp(){
+        startActivity(new Intent(this, RegisterUserActivity.class));
     }
 
     private void goToNearestGarage() {
         Intent intent;
-        String loginType = spinner.getSelectedItem().toString();
-        if (loginType == "Garage") {
+        String nameUser = login_et_username.getText().toString();
+        String pwdUser = login_et_password.getText().toString();
+        hashMyString = new HashMyString(pwdUser);
+        User user = verifyConnexionUser(nameUser, hashMyString.getMyHash());
+        if (user != null) {
+            intent = new Intent(this, UserListNearestGarageActivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Connexion to database failed", Toast.LENGTH_LONG).show();
+        }
+
+        //String loginType = spinner.getSelectedItem().toString();
+        /*if (loginType == "Garage") {
             String nameGarage = login_et_username.getText().toString();
             String pwdGarage = login_et_password.getText().toString();
             hashMyString = new HashMyString(pwdGarage);
@@ -98,12 +113,12 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Connexion to database failed", Toast.LENGTH_LONG).show();
             }
-        }
+        }*/
 
         //startActivity(intent);
     }
 
-    private Garage verifyConnexionGarage(String name, String password) {
+    /*private Garage verifyConnexionGarage(String name, String password) {
         garageDAO = new GarageDAO(this);
         garageDAO = garageDAO.openReadable();
         Garage toReturn = garageDAO.getGarageByLogin(name, password);
@@ -115,7 +130,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Welcome", Toast.LENGTH_LONG).show();
         }
         return toReturn;
-    }
+    }*/
 
     public User verifyConnexionUser(String firstName, String password) {
 

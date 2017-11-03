@@ -23,11 +23,6 @@
         android:layout_weight="0.8"
         android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/login_spinner_type_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Spinner>
-
         <EditText
             android:id="@+id/login_et_username"
             android:layout_width="match_parent"
@@ -51,9 +46,18 @@
             android:layout_height="wrap_content" />
         <Button
             android:id="@+id/login_btn_login"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login_btn_login" />
+        <TextView
+            android:text="@string/login_go_to_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/login_btn_sign_up"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/main_btn_goto_signup" />
 
     </LinearLayout>
 

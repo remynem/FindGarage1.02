@@ -50,7 +50,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     }
 
     private void goBackHome() {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 

@@ -19,6 +19,7 @@
     <string name="app_name_label">Find the nearest garage</string>
     <string name="MAP_KEY">AIzaSyDebrd5gGefoXOy76mQVB4dlqTdxm4V6aE</string>
     <string name="login_remember_me">Remember me</string>
+    <string name="login_go_to_sign_up">Need to sign Up?</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

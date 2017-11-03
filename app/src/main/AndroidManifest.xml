@@ -18,24 +18,18 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/MAP_KEY" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".DetailsGarageActivity" />
         <activity android:name=".UserMyDevisActivity" />
         <activity android:name=".UserListNearestGarageActivity" />
-        <activity android:name=".DetailsGarageActivity" />
-        <activity android:name=".GarageMyDevisActivity" />
-        <activity android:name=".GarageConfirmedOfferActivity" />
         <activity android:name=".UserConfirmedDevisActivity" />
-        <activity android:name=".ReservationUpdatesActivity" />
         <activity android:name=".RegisterUserActivity" />
-        <activity android:name=".RegisterGarageActivity" />
-        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>
