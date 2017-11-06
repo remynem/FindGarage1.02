@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "497827940350",
+    "firebase_url": "https://testloginfirebaseandroidapp.firebaseio.com",
+    "project_id": "testloginfirebaseandroidapp",
+    "storage_bucket": "testloginfirebaseandroidapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497827940350:android:160250cefcf210bd",
+        "android_client_info": {
+          "package_name": "com.example.user.findgarage10"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497827940350-djnjqr26atco8vttktl4bdrpuvrg6tdf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.user.findgarage10",
+            "certificate_hash": "263311eb4557bc2d8fc1038bbfe46ff9799da1d5"
+          }
+        },
+        {
+          "client_id": "497827940350-uvimqgb1lsveqksvaagc8hqs8edbqcam.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3DDZ5ogeHv9PQn7y31XIAmxCD1lRz-cQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "497827940350-uvimqgb1lsveqksvaagc8hqs8edbqcam.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

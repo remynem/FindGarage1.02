@@ -14,8 +14,19 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.user.findgarage10.db.OfferDAO;
+import com.example.user.findgarage10.db.UserDAO;
 import com.example.user.findgarage10.model.Offer;
 import com.example.user.findgarage10.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserMyDevisActivity extends AppCompatActivity {
 
@@ -25,6 +36,9 @@ public class UserMyDevisActivity extends AppCompatActivity {
     private OfferDAO offerDAO;
     private Button btn_back_home;
     private Button btn_show_confirmed_devis;
+    private FirebaseDatabase database;
+    private DatabaseReference rootRef;
+    private List<Offer> offers;
     //endregion
 
     @Override
@@ -33,6 +47,10 @@ public class UserMyDevisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_my_devis);
 
         initView();
+
+        database = FirebaseDatabase.getInstance();
+        rootRef = database.getReference();
+
         listMyDevis.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -55,7 +73,6 @@ public class UserMyDevisActivity extends AppCompatActivity {
 
     private void goToConfirmedDevis() {
         Intent intent = new Intent(this, UserConfirmedDevisActivity.class);
-        intent.putExtra("user", userConnected);
         startActivity(intent);
     }
 
@@ -82,8 +99,6 @@ public class UserMyDevisActivity extends AppCompatActivity {
 
     private void backHome() {
         Intent intent = new Intent(this, UserListNearestGarageActivity.class);
-        Bundle bundle = this.getIntent().getExtras();
-        intent.putExtra("user", bundle.getParcelable("user"));
         startActivity(intent);
     }
 
@@ -97,15 +112,33 @@ public class UserMyDevisActivity extends AppCompatActivity {
     }
 
     private void initList() {
-        offerDAO = new OfferDAO(this);
-        /*offerDAO = offerDAO.openWritable();
-        offerDAO.initOfferDb();*/
-        Bundle bundle = this.getIntent().getExtras();
-        userConnected = bundle.getParcelable("user");
-        offerDAO.openReadable();
-        Offer[] offers = offerDAO.getNotConfirmedOffersForUser(userConnected.getNum_user());
-        ArrayAdapter<Offer> adapter = new ArrayAdapter<Offer>(this, android.R.layout.simple_list_item_1, android.R.id.text1, offers);
-        listMyDevis.setAdapter(adapter);
+
+        offers = new ArrayList();
+        rootRef = FirebaseDatabase.getInstance().getReference("userDevis");
+        rootRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String user = snapshot.child("refUser").getValue(String.class);
+                    if(user.compareTo(FirebaseAuth.getInstance().getCurrentUser().getEmail()) == 0){
+                        String refGarage = snapshot.child("refGarage").getValue(String.class);
+                        String date = snapshot.child("date").getValue(String.class);
+                        String devisDescription = snapshot.child("devisDescription").getValue(String.class);
+
+                        Offer devis = new Offer(refGarage, date, devisDescription);
+                        offers.add(devis);
+                    }
+                }
+                ArrayAdapter<Offer> adapter = new ArrayAdapter<>(UserMyDevisActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, offers);
+                listMyDevis.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("val", "Failed to read value.", error.toException());
+            }
+        });
     }
 
     @Override

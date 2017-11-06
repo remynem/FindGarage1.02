@@ -27,6 +27,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,20 +49,22 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
     private Map<String, Position> garagesKnown;
     private User userConnected;
     private Button btn_go_to_user_my_devis;
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list_nearest_garage);
+        mAuth = FirebaseAuth.getInstance();
 
         initFields();
         getMyPosition();
-        getUserConnected();
         initListView();
 
         garagesKnown = getKnownGarage();
 
-        listView_garage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            listView_garage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String nomGarage = (String) listView_garage.getItemAtPosition(i);
@@ -82,6 +86,13 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
         displayMap();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        currentUser = mAuth.getCurrentUser();
+        getUserConnected(currentUser);
+    }
+
     private void logOut() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
@@ -89,7 +100,7 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
 
     private void goToMyDevis() {
         Intent intent = new Intent(this, UserMyDevisActivity.class);
-        intent.putExtra("user", userConnected);
+        //intent.putExtra("user", userConnected);
         startActivity(intent);
     }
 
@@ -99,8 +110,8 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
         Garage garageTarget = garageDAO.getGarageByName(nomGarage);
 
         Intent intent = new Intent(this, DetailsGarageActivity.class);
-        intent.putExtra("user", userConnected);
-        intent.putExtra("garage", garageTarget);
+        //intent.putExtra("user", userConnected);
+        //intent.putExtra("garage", garageTarget);
         startActivity(intent);
     }
 
@@ -111,9 +122,8 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
         logOut = (Button) findViewById(R.id.btn_Logout);
     }
 
-    public void getUserConnected() {
-        userConnected = getIntent().getExtras().getParcelable("user");
-        label_userConnected.setText(userConnected.toString());
+    public void getUserConnected(FirebaseUser currentUser) {
+        label_userConnected.setText(currentUser.getDisplayName());
     }
 
     private void initListView() {
@@ -179,7 +189,6 @@ public class UserListNearestGarageActivity extends FragmentActivity implements O
         garageDAO = garageDAO.openReadable();
         Garage[] listGarages = garageDAO.getAllGarages();
 
-        //Test de garde
         if(listGarages == null || listGarages.length == 0) {
          return null;
         }

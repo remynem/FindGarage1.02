@@ -3,6 +3,8 @@ package com.example.user.findgarage10.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.security.Provider;
+
 
 /**
  * Created by student on 03-07-17.
@@ -15,7 +17,9 @@ public class Offer implements Parcelable {
     //region fields
     private int num_offer;
     private int num_user;
+    private String refUser;
     private int num_garage;
+    private String refGarage;
     private String date_offer;
     private String description_offer;
     private String confirmed_offer;
@@ -26,6 +30,13 @@ public class Offer implements Parcelable {
         this.num_offer = -1;
         this.num_user = num_user;
         this.num_garage = num_garage;
+        this.date_offer = date_offer;
+        this.description_offer = description_offer;
+        this.confirmed_offer = "pending";
+    }
+
+    public Offer(String num_garage, String date_offer, String description_offer) {
+        this.refGarage = num_garage;
         this.date_offer = date_offer;
         this.description_offer = description_offer;
         this.confirmed_offer = "pending";
@@ -96,12 +107,10 @@ public class Offer implements Parcelable {
 
     @Override
     public String toString() {
-        return "Num : " + num_offer +
-                " Client : " + num_user +
-                " Garage : " + num_garage +
-                " Date : " + date_offer + '\'' +
-                " Description : " + description_offer + '\'' +
-                " Status : " + confirmed_offer;
+        return date_offer +
+                " Description : " + description_offer +
+                " \n Status : " + confirmed_offer +
+                " Garage : " + refGarage;
     }
 
     //endregion

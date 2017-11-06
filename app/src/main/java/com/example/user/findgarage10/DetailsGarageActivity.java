@@ -12,6 +12,10 @@ import com.example.user.findgarage10.db.OfferDAO;
 import com.example.user.findgarage10.model.Garage;
 import com.example.user.findgarage10.model.Offer;
 import com.example.user.findgarage10.model.User;
+import com.example.user.findgarage10.util.FireBaseController;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,14 +30,17 @@ public class DetailsGarageActivity extends AppCompatActivity {
     private EditText et_description_devis;
     private User userConnected;
     private Garage garageSelected;
-    private OfferDAO offerDAO;
+    private FirebaseDatabase database;
+    private DatabaseReference rootRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_garage);
 
-        initTarget();
+        database = FirebaseDatabase.getInstance();
+        rootRef = database.getReference();
+
         initView();
 
         btn_send_devis.setOnClickListener(new View.OnClickListener() {
@@ -58,31 +65,23 @@ public class DetailsGarageActivity extends AppCompatActivity {
         label_tel_garage = (TextView) findViewById(R.id.details_garage_label_num_garage);
     }
 
-    private void sendDevis() {
-        initTarget();
+     public void sendDevis() {
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        Offer offer = new Offer(userConnected.getNum_user(), garageSelected.getNum_garage(), date, et_description_devis.getText().toString());
+        String devisDescription = et_description_devis.getText().toString();
 
-        offerDAO = new OfferDAO(this);
-        offerDAO = offerDAO.openWritable();
-        offerDAO.insertOffer(offer);
-        offerDAO.close();
+         rootRef = database.getReference("userDevis").push();
 
-        finish();
-        Intent goBackToListDevis = new Intent(this, UserMyDevisActivity.class);
+         rootRef.child("refUser").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+         rootRef.child("refGarage").setValue("ixelles");
+         rootRef.child("devisDescription").setValue(devisDescription);
+         rootRef.child("status").setValue("pending");
+         rootRef.child("date").setValue(date);
 
-        goBackToListDevis.putExtra("user", userConnected);
-        goBackToListDevis.putExtra("garage", garageSelected);
-
-        startActivity(goBackToListDevis);
+        startActivity(new Intent(DetailsGarageActivity.this, UserMyDevisActivity.class));
     }
 
     private void backHome() {
         Intent goBackHome = new Intent(this, UserListNearestGarageActivity.class);
-
-        goBackHome.putExtra("user", userConnected);
-        goBackHome.putExtra("garage", garageSelected);
-
         startActivity(goBackHome);
     }
 
